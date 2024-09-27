@@ -63,7 +63,7 @@ class RegisterPage extends StatelessWidget {
                 hint: "ID/Passport Number",
                 type: "id_number",
                 required: true,
-                onSaved: (val) => activeUser.value.idPassportNumber = val,
+                onSaved: (val) => activeUser.value.idNumber = val,
               ),
               InputFieldWidget(
                 title: "Password",

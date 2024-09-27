@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: AppStrings.appName,
         theme: lightTheme,
+        themeMode: ThemeMode.light,
         onGenerateRoute: RouteGenerator.generateRoute,
         home: const OnboadingPage(),
       ),

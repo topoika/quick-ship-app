@@ -12,3 +12,4 @@ part 'onboarding.dart';
 // auth
 part 'auth/login.dart';
 part 'auth/register.dart';
+part 'auth/forgot.password.dart';
