@@ -22,13 +22,14 @@ class ForgotPassword extends StatelessWidget {
               ),
               SizedBox(height: context.height * 0.05),
               const TextVariation(
-                text: "Welcome Back",
+                text: "Forgot Password, No worries!",
                 size: 24,
                 weight: FontWeight.w700,
               ),
               const SizedBox(height: 5),
               const TextVariation(
-                text: "Login to your account",
+                text:
+                    "Enter your email to a recieve an OTP to reset your password",
                 size: 14,
                 weight: FontWeight.w500,
                 opacity: 0.5,
