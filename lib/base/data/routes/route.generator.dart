@@ -11,6 +11,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case AppRoutes.register:
         return MaterialPageRoute(builder: (_) => const RegisterPage());
+      case AppRoutes.forgotPassword:
+        return MaterialPageRoute(builder: (_) => const ForgotPassword());
+      case AppRoutes.otpVerification:
+        return MaterialPageRoute(builder: (_) => const OTPVerification());
+      case AppRoutes.resetPassword:
+        return MaterialPageRoute(builder: (_) => const ResetPassword());
       default:
         return _errorRoute();
     }

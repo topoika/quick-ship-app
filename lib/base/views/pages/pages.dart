@@ -1,6 +1,9 @@
 library pages;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:quick_ship_app/base/data/provider/export.provider.dart';
 
 import '../../data/data.dart';
@@ -13,3 +16,5 @@ part 'onboarding.dart';
 part 'auth/login.dart';
 part 'auth/register.dart';
 part 'auth/forgot.password.dart';
+part 'auth/reset.password.dart';
+part 'auth/otp.verification.dart';

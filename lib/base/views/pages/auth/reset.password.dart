@@ -1,7 +1,7 @@
-part of '../pages.dart';
+part of "../pages.dart";
 
-class ForgotPassword extends StatelessWidget {
-  const ForgotPassword({super.key});
+class ResetPassword extends StatelessWidget {
+  const ResetPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ForgotPassword extends StatelessWidget {
               ),
               SizedBox(height: context.height * 0.05),
               const TextVariation(
-                text: "Forgot Password, No worries!",
+                text: "Reset Password",
                 size: 24,
                 weight: FontWeight.w700,
               ),
@@ -31,7 +31,7 @@ class ForgotPassword extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: TextVariation(
                   text:
-                      "Enter your email to a recieve an OTP to reset your password",
+                      "Enter your new password to reset your account password",
                   size: 12,
                   align: TextAlign.center,
                   weight: FontWeight.w500,
@@ -40,36 +40,27 @@ class ForgotPassword extends StatelessWidget {
               ),
               SizedBox(height: context.height * 0.02),
               InputFieldWidget(
-                hint: "Email",
-                type: "email",
-                title: "Email",
+                title: "Password",
+                hint: "Password",
+                type: "password",
                 required: true,
-                onSaved: (val) => activeUser.value.email = val,
+                onSaved: (val) => activeUser.value.password = val,
+              ),
+              InputFieldWidget(
+                title: "Confirm Password",
+                hint: "Confirm Password",
+                type: "confirm_password",
+                required: true,
+                onSaved: (val) => activeUser.value.password = val,
               ),
               const SizedBox(height: 15),
               PrimaryButton(
-                text: "Send OTP",
+                text: "Submit",
                 onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.otpVerification);
+                  Navigator.pushReplacementNamed(context, AppRoutes.login);
                 },
               ),
               SizedBox(height: context.height * 0.03),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  const TextVariation(
-                    text: "Back to ",
-                    weight: FontWeight.w500,
-                  ),
-                  TextButtonWidget(
-                    text: "Login",
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, AppRoutes.login);
-                    },
-                  ),
-                ],
-              ),
             ],
           ),
         ),

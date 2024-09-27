@@ -54,7 +54,7 @@ class LoginPage extends StatelessWidget {
               TextButtonWidget(
                 text: "Forgot Password?",
                 onPressed: () {
-                  showCustomToast(message: "Coming soon...👩‍💻");
+                  Navigator.pushNamed(context, AppRoutes.forgotPassword);
                 },
               ),
               SizedBox(height: context.height * 0.05),
