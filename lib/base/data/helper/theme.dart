@@ -1,24 +1,25 @@
 part of "../data.dart";
 
 const ColorScheme colorScheme = ColorScheme(
-  primary: Color(0xFF0044B1),
-  secondary: Color(0xFF0044B1),
-  surface: Color(0xFFFFFFFF),
+  primary: Color(0xFF009C48),
+  secondary: Color(0xFF00733A),
+  surface: Color(0xFFB2DFB5),
   error: Color(0xFFB00020),
   onPrimary: Color(0xFFFFFFFF),
   onSecondary: Color(0xFFFFFFFF),
-  onSurface: Color(0xFF000000),
+  onSurface: Color(0xFF004F25),
   onError: Color(0xFFFFFFFF),
   brightness: Brightness.light,
 );
+
 ThemeData lightTheme = ThemeData(
   colorScheme: colorScheme,
   useMaterial3: true,
-  primaryColor: AppContants.primaryColor,
+  primaryColor: AppConstants.primaryColor,
   fontFamily: "Poppins",
-  scaffoldBackgroundColor: colorScheme.surface,
-  appBarTheme: AppBarTheme(
-    backgroundColor: colorScheme.surface,
+  scaffoldBackgroundColor: Colors.white,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Colors.white,
     elevation: 0,
     centerTitle: true,
   ),
@@ -28,7 +29,6 @@ extension ThemeExtension on BuildContext {
   ThemeData get theme => Theme.of(this);
   double get width => MediaQuery.of(this).size.width;
   double get height => MediaQuery.of(this).size.height;
-  TextTheme get textTheme => theme.textTheme;
   ColorScheme get colorScheme => theme.colorScheme;
   Color get primaryColor => theme.primaryColor;
 
@@ -51,7 +51,7 @@ extension ThemeExtension on BuildContext {
   Color get cardColor => theme.cardColor;
   Color get dialogBackgroundColor => theme.dialogBackgroundColor;
 
-  double get horPad => AppContants.horPad;
+  double get horPad => AppConstants.horPad;
   double get textScaleFactor => MediaQuery.of(this).textScaleFactor;
 }
 

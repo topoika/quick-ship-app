@@ -12,24 +12,25 @@ class _OnboadingPageState extends State<OnboadingPage> {
   PageController controller = PageController();
   List pages = [
     const OnboadingItem(
-      title: "Discover and Engage with Talent Globally",
+      title: "Ship Packages from Anywhere",
       description:
-          "Access global talent pool find the right fit and streamline your hiring process.",
+          "Easily send packages from your location to any destination. Fast and reliable shipping at your fingertips.",
       imageUrl: AppStrings.onBoarding1,
     ),
     const OnboadingItem(
-      title: "Showcase Your Opportunities",
+      title: "Track Your Shipment in Real-Time",
       description:
-          "Create a standout profile to attract top talent. Showcase your culture, open roles, and what makes your team unique. ",
+          "Get real-time updates on the status of your package. Know exactly where your shipment is at any moment.",
       imageUrl: AppStrings.onBoarding2,
     ),
     const OnboadingItem(
-      title: "More Affordable than Traditional Hiring",
+      title: "Connect with Shippers and Postmen",
       description:
-          "Streamline hiring and cut costs on ads, long cycles, and agency fees. Find candidates faster and cheaper.",
+          "Use in-app messaging to interact with shippers and postmen. Communicate seamlessly to ensure smooth deliveries.",
       imageUrl: AppStrings.onBoarding3,
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +49,8 @@ class _OnboadingPageState extends State<OnboadingPage> {
                       text: "Skip",
                       textAlign: TextAlign.end,
                       onPressed: () {
-                        setState(() => currentIndex = 2);
-                        controller.jumpToPage(2);
+                        Navigator.pushReplacementNamed(
+                            context, AppRoutes.login);
                       },
                     ),
                   ),
@@ -87,9 +88,7 @@ class _OnboadingPageState extends State<OnboadingPage> {
                     onTap: () {
                       if (currentIndex == 2) {
                         Navigator.pushReplacementNamed(
-                          context,
-                          AppRoutes.signUp,
-                        );
+                            context, AppRoutes.login);
                       } else {
                         controller.nextPage(
                             duration: const Duration(milliseconds: 300),

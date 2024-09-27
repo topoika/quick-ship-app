@@ -8,6 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
+import '../views/components/components.dart';
+import '../views/pages/pages.dart';
+
 // helper
 part 'helper/theme.dart';
 part 'helper/storage.service.dart';

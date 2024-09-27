@@ -1,0 +1,159 @@
+part of "../components.dart";
+
+List<String> validationErrors = [];
+String? validator(String? value, String type) {
+  String? error;
+  switch (type) {
+    case "link":
+      error = null;
+    case "email":
+      error = validateEmail(value!);
+      addError(error);
+    case "password" || "confirm_password":
+      error = validatePassword(value!,confirm: type == "confirm_password");
+      addError(error);
+    case "phone":
+      error = validatePhone(value!);
+      addError(error);
+    case "id_number":
+      error = validateIdNumber(value!);
+      addError(error);
+    case "name":
+      error = validName(value!);
+      addError(error);
+    case "date":
+      error = validateDate(value);
+      addError(error);
+    default:
+      error = 'Invalid type';
+      addError(error);
+  }
+  validationErrors = validationErrors.toSet().toList();
+  return error;
+}
+
+String? validateDate(String? value) {
+  if (value == null || value.isEmpty) {
+    return "Date of birth is required";
+  }
+  final components = value.split("/");
+  if (components.length == 3) {
+    final day = int.tryParse(components[0]);
+    final month = int.tryParse(components[1]);
+    final year = int.tryParse(components[2]);
+    if (day != null && month != null && year != null) {
+      final date = DateTime(year, month, day);
+      if (date.year == year && date.month == month && date.day == day) {
+        return null;
+      }
+    }
+  }
+  return "Invalid date of birth";
+}
+
+void addError(val) {
+  if (val != null) {
+    validationErrors.add(val);
+  }
+}
+
+String? validName(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Name is required';
+  } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
+    return 'Invalid name format';
+  }
+  return null;
+}
+
+String? validatePassword(String? value, {bool confirm = false}) {
+  if (value == null || value.isEmpty) {
+    return 'Password is required';
+  } else if (value.length < 6) {
+    return 'Password must be at least 6 characters';
+  }
+  if (confirm && value != activeUser.value.password) {
+    return "Passwords provide do not match";
+  }
+  return null;
+}
+
+String? validateEmail(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Email is required';
+  } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+      .hasMatch(value)) {
+    return 'Invalid email format';
+  }
+  return null;
+}
+
+String? validatePhone(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Phone number is required';
+  }
+
+  if (value.startsWith('0')) {
+    if (value.length != 10) {
+      return 'Invalid phone number';
+    }
+  } else {
+    if (value.length != 9) {
+      return 'Invalid phone number';
+    }
+  }
+
+  if (!RegExp(r'^\d+$').hasMatch(value)) {
+    return 'Invalid phone number';
+  }
+
+  return null;
+}
+
+// validate ID/Passport number
+String? validateIdNumber(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'ID/Passport number is required';
+  }
+
+  if (value.length < 8) {
+    return 'Invalid ID/Passport number';
+  }
+
+  if (!RegExp(r'^\d+$').hasMatch(value)) {
+    return 'Invalid ID/Passport number';
+  }
+
+  return null;
+}
+
+// keyboard
+TextInputType getTextInputType(String type) {
+  switch (type) {
+    case "number" || "id_number":
+      return TextInputType.number;
+    case "email":
+      return TextInputType.emailAddress;
+    case "date":
+      return TextInputType.datetime;
+    case "phone":
+      return TextInputType.phone;
+    default:
+      return TextInputType.text;
+  }
+}
+
+List<TextInputFormatter> inputFormatters(String type) {
+  switch (type) {
+    case "phone":
+      return [
+        MaskTextInputFormatter(
+          mask: '### #### ###',
+          filter: {"#": RegExp(r'[0-9]')},
+          type: MaskAutoCompletionType.lazy,
+        )
+      ];
+    default:
+      return [];
+  }
+}

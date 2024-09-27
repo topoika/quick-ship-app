@@ -23,6 +23,7 @@ class PrimaryButton extends StatelessWidget {
       },
       child: Container(
         width: double.maxFinite,
+        alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
         decoration: BoxDecoration(
           color: context.primaryColor.withOpacity(disabled ? 0.7 : 1),
@@ -36,29 +37,14 @@ class PrimaryButton extends StatelessWidget {
                   radius: 13,
                 ),
               )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: TextVariation(
-                      text: text,
-                      color: Colors.white,
-                      weight: FontWeight.w600,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(9),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: QImage(
-                      imageUrl: AppStrings.arrowRight,
-                      color: context.primaryColor,
-                    ),
-                  )
-                ],
+            : Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: TextVariation(
+                  text: text,
+                  color: Colors.white,
+                  size: 14,
+                  weight: FontWeight.w600,
+                ),
               ),
       ),
     );

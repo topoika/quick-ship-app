@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'base/data/data.dart';
+import 'base/data/provider/export.provider.dart';
 import 'base/views/pages/pages.dart';
 
 void main() async {
@@ -13,10 +15,15 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: AppStrings.appName,
-      theme: lightTheme,
-      home: const OnboadingPage(),
+    return MultiBlocProvider(
+      providers: blocProvider(context: context),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: AppStrings.appName,
+        theme: lightTheme,
+        onGenerateRoute: RouteGenerator.generateRoute,
+        home: const OnboadingPage(),
+      ),
     );
   }
 }
