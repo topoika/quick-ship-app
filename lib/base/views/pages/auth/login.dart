@@ -49,7 +49,13 @@ class LoginPage extends StatelessWidget {
                 onSaved: (val) => activeUser.value.password = val,
               ),
               const SizedBox(height: 10),
-              PrimaryButton(text: "Login", onPressed: () {}),
+              PrimaryButton(
+                text: "Login",
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, AppRoutes.tabs, (route) => false);
+                },
+              ),
               SizedBox(height: context.height * 0.03),
               TextButtonWidget(
                 text: "Forgot Password?",

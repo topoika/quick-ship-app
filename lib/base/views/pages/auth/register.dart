@@ -79,6 +79,8 @@ class RegisterPage extends StatelessWidget {
                 required: true,
                 onSaved: (val) => activeUser.value.password = val,
               ),
+              
+              
               const SizedBox(height: 15),
               Wrap(
                 alignment: WrapAlignment.center,
@@ -100,7 +102,13 @@ class RegisterPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 15),
-              PrimaryButton(text: "Register", onPressed: () {}),
+              PrimaryButton(
+                text: "Register",
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, AppRoutes.tabs, (route) => false);
+                },
+              ),
               SizedBox(height: context.height * 0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -10,7 +10,7 @@ String? validator(String? value, String type) {
       error = validateEmail(value!);
       addError(error);
     case "password" || "confirm_password":
-      error = validatePassword(value!,confirm: type == "confirm_password");
+      error = validatePassword(value!, confirm: type == "confirm_password");
       addError(error);
     case "phone":
       error = validatePhone(value!);
@@ -155,5 +155,15 @@ List<TextInputFormatter> inputFormatters(String type) {
       ];
     default:
       return [];
+  }
+}
+
+// input capitalization
+TextCapitalization getTextCapitalization(String type) {
+  switch (type) {
+    case "name":
+      return TextCapitalization.words;
+    default:
+      return TextCapitalization.none;
   }
 }

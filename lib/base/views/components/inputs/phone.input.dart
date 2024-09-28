@@ -5,12 +5,15 @@ class PhoneInputField extends StatefulWidget {
   final bool disabled;
   final Function(String) onSaved;
   final Function(String)? onChanged;
+  // init
+  final String? init;
   const PhoneInputField({
     super.key,
     required this.hint,
     required this.disabled,
     required this.onSaved,
     this.onChanged,
+    this.init,
   });
 
   @override
@@ -19,6 +22,14 @@ class PhoneInputField extends StatefulWidget {
 
 class _PhoneInputFieldState extends State<PhoneInputField> {
   CountryCode countryCode = CountryCode.fromCountryCode("KE");
+  String? phoneNumber;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.init != null) {
+      phoneNumber = widget.init!.replaceAll(countryCode.code!, "");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +98,7 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
                       onSaved: (val) => widget.onSaved(getPhoneNumber(
                           val!.replaceAll(" ", "").trim(), countryCode)),
                       inputFormatters: inputFormatters("phone"),
+                      initialValue: phoneNumber ?? "",
                       enabled: !widget.disabled,
                       validator: (value) =>
                           validator(value?.replaceAll(" ", "").trim(), "phone"),

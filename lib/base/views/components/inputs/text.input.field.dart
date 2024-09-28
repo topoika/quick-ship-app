@@ -6,10 +6,12 @@ class InputFieldWidget extends StatelessWidget {
   final String hint;
   final String type;
   final Function(String?)? onSaved;
+  final String? init;
   const InputFieldWidget({
     super.key,
     this.title,
     this.onSaved,
+    this.init,
     this.required = false,
     required this.hint,
     required this.type,
@@ -54,7 +56,9 @@ class InputFieldWidget extends StatelessWidget {
               style: inputTextStyle(context: context),
               keyboardType: getTextInputType(type),
               onSaved: onSaved,
-              obscureText: password ? visible : true,
+              obscureText: password ? visible : false,
+              initialValue: init ?? "",
+              textCapitalization: getTextCapitalization(type),
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[200],

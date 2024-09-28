@@ -6,4 +6,10 @@ class AppRoutes {
   static const String forgotPassword = "/ForgotPassword";
   static const String otpVerification = "/OTPVerification";
   static const String resetPassword = "/ResetPassword";
+
+  // tabs
+  static const String tabs = "/TabsPage";
+
+  // user
+  static const String editProfile = "/EditProfile";
 }

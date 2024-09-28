@@ -16,6 +16,7 @@ class User {
   bool? signInMethodVerified;
   bool? isBlocked;
   String? createdAt;
+  String? imageUrl;
   User({
     this.id,
     this.name,
@@ -32,6 +33,7 @@ class User {
     this.signInMethodVerified,
     this.isBlocked,
     this.createdAt,
+    this.imageUrl,
   });
 
   Map<String, dynamic> toMap() {

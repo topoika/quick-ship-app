@@ -23,6 +23,16 @@ class AppStrings {
 
   // icons
   static const String arrowRight = "${icons}arrow-right.svg";
+  static const String editIcon = "${icons}edit.svg";
   static const String google = '${icons}google.svg';
   static const String facebook = '${icons}facebook.svg';
+
+  // settings icons
+  static const String faqIcon = '${icons}faqs.svg';
+  static const String deleteIcon = '${icons}delete.svg';
+  static const String infoIcon = '${icons}info.svg';
+  static const String helpIcon = '${icons}help.svg';
+  static const String contactIcon = '${icons}contact.svg';
+  static const String boxIcon = '${icons}box.svg';
+  static const String receiptIcon = '${icons}receipt.svg';
 }

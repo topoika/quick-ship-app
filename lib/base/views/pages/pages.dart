@@ -1,7 +1,9 @@
 library pages;
 
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:quick_ship_app/base/data/provider/export.provider.dart';
@@ -18,3 +20,10 @@ part 'auth/register.dart';
 part 'auth/forgot.password.dart';
 part 'auth/reset.password.dart';
 part 'auth/otp.verification.dart';
+
+// tabs
+part 'tabs/tabs.dart';
+part "tabs/settings.dart";
+
+// user
+part 'user/edit.profile.dart';
