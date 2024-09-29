@@ -30,3 +30,7 @@ part 'inputs/validators.dart';
 part 'inputs/phone.input.dart';
 part 'inputs/drop.down.input.dart';
 part 'inputs/image.pick.upload.dart';
+
+// home page widget
+part 'home/tasks.widget.dart';
+part 'home/invite.join.community.widget.dart';

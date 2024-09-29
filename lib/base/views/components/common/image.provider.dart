@@ -63,6 +63,7 @@ class QImage extends StatelessWidget {
               height: height,
               fit: fit,
               alignment: alignment,
+              color: color,
               errorBuilder: (_, o, s) => errorWidget,
             ),
           (false, true) => SvgPicture.asset(

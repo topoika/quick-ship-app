@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import '../views/components/components.dart';
 import '../views/pages/pages.dart';
@@ -18,6 +19,7 @@ part 'helper/strings.dart';
 part 'helper/network.dart';
 part 'helper/custom.error.dart';
 part 'helper/constants.dart';
+part 'helper/helper.dart';
 
 // routes
 part 'routes/app.routes.dart';

@@ -27,6 +27,18 @@ class AppStrings {
   static const String google = '${icons}google.svg';
   static const String facebook = '${icons}facebook.svg';
 
+  // navigation icons
+  static const String homeIcon = '${images}home-1.png';
+  static const String tripIcon = '${images}trip-1.png';
+  static const String userIcon = '${images}user-1.png';
+  static const String chatIcon = '${images}chat-1.png';
+  static const String shipmentIcon = '${images}shipment-1.png';
+  static const String homeActive = '${images}home.png';
+  static const String tripActive = '${images}trip.png';
+  static const String userActive = '${images}user.png';
+  static const String chatActive = '${images}chat.png';
+  static const String shipmentActive = '${images}shipment.png';
+
   // settings icons
   static const String faqIcon = '${icons}faqs.svg';
   static const String deleteIcon = '${icons}delete.svg';
@@ -35,4 +47,10 @@ class AppStrings {
   static const String contactIcon = '${icons}contact.svg';
   static const String boxIcon = '${icons}box.svg';
   static const String receiptIcon = '${icons}receipt.svg';
+
+  // home icons
+  static const String itanaryIcon = '${icons}itanary.svg';
+  static const String shipmentsIcon = '${icons}Shipments.svg';
+  static const String makeMoneyImage = '${images}make-money.png';
+  static const String inviteFriendsImage = '${images}invite-friend.png';
 }
