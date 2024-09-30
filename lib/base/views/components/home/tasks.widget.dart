@@ -24,6 +24,10 @@ class TasksWidget extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: GestureDetector(
+              onTap: () {
+                // set trip to a new trip on trip cubit
+                Navigator.pushNamed(context, AppRoutes.createTrip);
+              },
               child: Column(
                 children: <Widget>[
                   Container(
@@ -73,6 +77,10 @@ class TasksWidget extends StatelessWidget {
           ),
           Expanded(
             child: GestureDetector(
+              onTap: () {
+                // set package to a new trip on package cubit
+                Navigator.pushNamed(context, AppRoutes.createPackage);
+              },
               child: Column(
                 children: <Widget>[
                   Container(

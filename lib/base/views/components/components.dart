@@ -34,3 +34,6 @@ part 'inputs/image.pick.upload.dart';
 // home page widget
 part 'home/tasks.widget.dart';
 part 'home/invite.join.community.widget.dart';
+
+// trip page widget
+part 'trip/create.trip.widgets.dart';

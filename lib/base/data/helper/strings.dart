@@ -27,7 +27,16 @@ class AppStrings {
   static const String google = '${icons}google.svg';
   static const String facebook = '${icons}facebook.svg';
 
+  // travel methods icons
+  static const String airIcon = "${icons}air.svg";
+  static const String busIcon = "${icons}bus.svg";
+  static const String carIcon = "${icons}car.svg";
+  static const String trainIcon = "${icons}train.svg";
+  static const String bikeIcon = "${icons}bike.svg";
+  static const String vanIcon = "${icons}van.svg";
+
   // navigation icons
+  static const String backIcon = "${icons}back-arrow.svg";
   static const String homeIcon = '${images}home-1.png';
   static const String tripIcon = '${images}trip-1.png';
   static const String userIcon = '${images}user-1.png';

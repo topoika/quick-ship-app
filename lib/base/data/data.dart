@@ -26,3 +26,6 @@ part 'routes/app.routes.dart';
 part 'routes/route.generator.dart';
 // models
 part 'models/user.dart';
+part 'models/trip.dart';
+part 'models/package.dart';
+part 'models/address.dart';

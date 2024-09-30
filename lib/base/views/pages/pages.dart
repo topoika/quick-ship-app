@@ -30,3 +30,8 @@ part 'tabs/home.dart';
 
 // user
 part 'user/edit.profile.dart';
+
+// activities
+part 'activities/package/create.package.dart';
+part 'activities/trip/create.trip.dart';
+part 'activities/trip/trip.details.dart';
