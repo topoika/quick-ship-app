@@ -158,6 +158,16 @@ Future<File> takeCarImage(context) async {
   return File(pickedFile!.path);
 }
 
+Future<File> takePackageImage(context) async {
+  final pickedFile = await filePicker.pickImage(
+      source: ImageSource.camera,
+      preferredCameraDevice: CameraDevice.rear,
+      imageQuality: 100);
+  Navigator.pop(context);
+
+  return File(pickedFile!.path);
+}
+
 Future<List<File>> loadImages(context) async {
   List<File> files = [];
   final pickedImages = await filePicker.pickMultiImage(imageQuality: 100);

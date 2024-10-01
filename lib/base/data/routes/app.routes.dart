@@ -1,6 +1,10 @@
 part of "../data.dart";
 
 class AppRoutes {
+  // onboarding
+  static const String onboardingPage = "/OnboardingPage";
+  static const String noInternePage = "/NoInternetPage";
+
   static const String login = "/LoginPage";
   static const String register = "/RegisterPage";
   static const String forgotPassword = "/ForgotPassword";

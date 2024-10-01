@@ -49,6 +49,7 @@ class _OnboadingPageState extends State<OnboadingPage> {
                       text: "Skip",
                       textAlign: TextAlign.end,
                       onPressed: () {
+                        Storage.saveData("opened", true);
                         Navigator.pushReplacementNamed(
                             context, AppRoutes.login);
                       },
@@ -87,6 +88,7 @@ class _OnboadingPageState extends State<OnboadingPage> {
                   GestureDetector(
                     onTap: () {
                       if (currentIndex == 2) {
+                        Storage.saveData("opened", true);
                         Navigator.pushReplacementNamed(
                             context, AppRoutes.login);
                       } else {

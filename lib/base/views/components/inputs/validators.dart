@@ -5,31 +5,60 @@ String? validator(String? value, String type) {
   String? error;
   switch (type) {
     case "link":
-      error = null;
+      return null;
     case "email":
-      error = validateEmail(value!);
-      addError(error);
-    case "password" || "confirm_password":
-      error = validatePassword(value!, confirm: type == "confirm_password");
-      addError(error);
+      error = validateEmail(value);
+      break;
+    case "password":
+      error = validatePassword(value);
+      break;
+    case "confirm_password":
+      error = validatePassword(value, confirm: true);
+      break;
     case "phone":
-      error = validatePhone(value!);
-      addError(error);
+      error = validatePhone(value);
+      break;
     case "id_number":
-      error = validateIdNumber(value!);
-      addError(error);
+      error = validateIdNumber(value);
+      break;
     case "name":
-      error = validName(value!);
-      addError(error);
+      error = validName(value);
+      break;
     case "date":
       error = validateDate(value);
-      addError(error);
+      break;
+    case "money":
+      error = validateMoney(value);
+      break;
+    case "address":
+      error = value!.length < 4 ? "Enter a valid place name" : null;
+      break;
+    case "license":
+      error = value!.length < 4 ? "Enter valid Licence Plate" : null;
+      break;
+    case "description":
+      error = value!.isEmpty ? "Enter something" : null;
+      break;
+    case "vehicle":
+      error = value!.isEmpty ? "Enter a valid vehicle Identiy" : null;
+      break;
     default:
-      error = 'Invalid type';
-      addError(error);
+      return 'Invalid type';
+  }
+  if (error != null) {
+    addError(error);
   }
   validationErrors = validationErrors.toSet().toList();
   return error;
+}
+
+// validate money
+String? validateMoney(String? value) {
+  if (value == null || value.isEmpty) {
+    return "Enter a valid Amount";
+  }
+
+  return null;
 }
 
 String? validateDate(String? value) {
@@ -130,7 +159,7 @@ String? validateIdNumber(String? value) {
 // keyboard
 TextInputType getTextInputType(String type) {
   switch (type) {
-    case "number" || "id_number":
+    case "number" || "id_number" || "money":
       return TextInputType.number;
     case "email":
       return TextInputType.emailAddress;

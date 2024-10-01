@@ -63,12 +63,12 @@ class SettingsPage extends StatelessWidget {
                             weight: FontWeight.w600,
                           ),
                           Visibility(
-                            visible: true,
-                            // activeUser.value.verificationBack !=
-                            //         null &&
-                            //     activeUser.value.verificationFront != null &&
-                            //     activeUser.value.verified != false,
+                            visible: activeUser.value.verificationBack !=
+                                    null &&
+                                activeUser.value.verificationFront != null &&
+                                activeUser.value.verified != false,
                             child: Container(
+                              margin: const EdgeInsets.only(left: 5, top: 2),
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 2),
                               decoration: BoxDecoration(
@@ -78,7 +78,7 @@ class SettingsPage extends StatelessWidget {
                               child: const TextVariation(
                                 text: "Pending",
                                 color: Colors.white,
-                                size: 8,
+                                size: 7,
                                 weight: FontWeight.w500,
                               ),
                             ),
@@ -143,13 +143,84 @@ class SettingsPage extends StatelessWidget {
                   showCustomToast(message: "Coming soon");
                 },
               ),
-              SettingsItem(
-                title: "Delete Account",
-                image: AppStrings.deleteIcon,
-                color: Colors.red,
-                onTap: () {
-                  showCustomToast(message: "Coming soon");
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 9),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: context.primaryColor.withOpacity(.07),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.logout_outlined,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                    SizedBox(width: context.width * 0.03),
+                    const TextVariation(
+                      text: "Logout",
+                      size: 16,
+                      weight: FontWeight.w600,
+                    ),
+                    const Spacer(),
+                    Visibility(
+                      visible: true,
+                      replacement: CupertinoActivityIndicator(
+                        color: context.primaryColor,
+                        radius: 10,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey[300]!),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  // TODO: implement listener
                 },
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return SettingsItem(
+                      title: "Delete Account",
+                      loading: state is AuthLoading,
+                      image: AppStrings.deleteIcon,
+                      color: Colors.red,
+                      onTap: () {
+                        showCustomDialog(
+                          context: context,
+                          data: DialogData(
+                            title: "Confirm Logout",
+                            description:
+                                "Are you sure you want to log out? You’ll need to log in again to access your account.",
+                            noText: "Cancel",
+                            yesText: "Log Out",
+                            yesOnPressed: () {
+                              Navigator.pop(context);
+                              context.read<AuthBloc>().add(Logout());
+                            },
+                            noOnPressed: () {
+                              Navigator.pop(context);
+                            },
+                            type: "warning",
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),

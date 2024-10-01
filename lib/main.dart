@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         theme: lightTheme,
         themeMode: ThemeMode.light,
         onGenerateRoute: RouteGenerator.generateRoute,
-        home: const OnboadingPage(),
+        home: const SplashScreen(),
       ),
     );
   }

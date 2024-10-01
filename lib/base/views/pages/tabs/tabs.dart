@@ -1,12 +1,11 @@
 part of "../pages.dart";
 
 class TabsPage extends StatelessWidget {
-  final int? active;
-  const TabsPage({super.key, this.active});
+  const TabsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    int index = active ?? context.watch<NavigatorCubit>().state;
+    int index = context.watch<NavigatorCubit>().state;
     return Scaffold(
       body: buildBody(index),
       bottomNavigationBar: MediaQuery(
@@ -94,7 +93,7 @@ class TabsPage extends StatelessWidget {
       case 2:
         return const SettingsPage();
       case 3:
-        return const SettingsPage();
+        return const ChatsPage();
       case 4:
         return const SettingsPage();
       default:

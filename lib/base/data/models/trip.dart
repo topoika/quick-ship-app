@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of "../data.dart";
 
 class Trip {
@@ -8,9 +9,28 @@ class Trip {
   String? status;
   String? guideToMeetingPoint;
   String? packagePreference;
-  double?postageFee;
-  
+  double? postageFee;
+  String? licenseNumber;
+  String? vehicleIdentity;
 
+  Address? departure;
+  Address? destination;
+  User? postman;
+  Trip({
+    this.id,
+    this.travelMethod,
+    this.travelRole,
+    this.allowRequest,
+    this.status,
+    this.guideToMeetingPoint,
+    this.packagePreference,
+    this.postageFee,
+    this.departure,
+    this.destination,
+    this.postman,
+    this.licenseNumber,
+    this.vehicleIdentity,
+  });
 }
 
 class TravelMethod {
@@ -27,12 +47,12 @@ class TravelMethod {
 }
 
 List<TravelMethod> travelMethods = [
-  TravelMethod(
-    id: 1,
-    name: "Air",
-    icon: AppStrings.airIcon,
-    color: const Color(0xff6B68FF),
-  ),
+  // TravelMethod(
+  //   id: 1,
+  //   name: "Air",
+  //   icon: AppStrings.airIcon,
+  //   color: const Color(0xff6B68FF),
+  // ),
   TravelMethod(
     id: 2,
     name: "Bus",
@@ -57,10 +77,10 @@ List<TravelMethod> travelMethods = [
     icon: AppStrings.bikeIcon,
     color: const Color(0xffFF7F00),
   ),
-  // TravelMethod(
-  //   id: 6,
-  //   name: "Van",
-  //   icon: AppStrings.vanIcon,
-  //   color: const Color.fromARGB(255, 187, 5, 5),
-  // ),
+  TravelMethod(
+    id: 6,
+    name: "Van",
+    icon: AppStrings.vanIcon,
+    color: const Color.fromARGB(255, 187, 5, 5),
+  ),
 ];

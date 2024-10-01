@@ -5,31 +5,67 @@ class YouAreAWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Trip trip = Trip();
+    Trip trip = context.watch<NewItemCubit>().trip;
+
     return Visibility(
-      visible: ![1, 4].contains(3),
+      visible: ![1, 4].contains(trip.travelMethod?.id),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const SizedBox(height: 20),
           const TextVariation(
             text: "Select a Travel Method",
-            size: 16,
+            size: 15,
             weight: FontWeight.w600,
           ),
           const SizedBox(height: 10),
           Row(
             children: <Widget>[
-              radioItem("Driver", "Driver", "Driver", (val) {}),
-              radioItem(
-                  "Shipping Company", "driver", "Shipping Company", (val) {}),
+              radioItem("Driver", trip.travelRole, "Driver", (val) {
+                trip.travelRole = val;
+                setTrip(trip: trip, context: context);
+              }),
+              radioItem("Shipping Company", trip.travelRole, "Shipping Company",
+                  (val) {
+                trip.travelRole = val;
+                setTrip(trip: trip, context: context);
+              }),
             ],
           ),
           Row(
             children: <Widget>[
-              radioItem("Passenger", "driver", "Passenger", (val) {}),
-              radioItem("Conductor", "driver", "Conductor", (val) {}),
+              radioItem("Passenger", trip.travelRole, "Passenger", (val) {
+                trip.travelRole = val;
+                setTrip(trip: trip, context: context);
+              }),
+              radioItem("Conductor", trip.travelRole, "Conductor", (val) {
+                trip.travelRole = val;
+                setTrip(trip: trip, context: context);
+              }),
             ],
+          ),
+          const SizedBox(height: 15),
+          const TextVariation(
+            text: "Vehicle Details",
+            size: 15,
+            weight: FontWeight.w600,
+          ),
+          const SizedBox(height: 10),
+          NewItemInputField(
+            hint: "Vehicle Identity",
+            type: "vehicle",
+            onSaved: (value) {
+              trip.vehicleIdentity = value;
+              setTrip(trip: trip, context: context);
+            },
+          ),
+          NewItemInputField(
+            hint: "License Plate",
+            type: "license",
+            onSaved: (value) {
+              trip.licenseNumber = value;
+              setTrip(trip: trip, context: context);
+            },
           ),
         ],
       ),
@@ -71,14 +107,18 @@ class TravelMethodWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Trip trip = context.watch<NewItemCubit>().trip;
     return Wrap(
       spacing: context.width * 0.02,
       crossAxisAlignment: WrapCrossAlignment.center,
       alignment: WrapAlignment.center,
       children: travelMethods.map((e) {
-        bool selected = e.id == 2;
+        bool selected = e.id == trip.travelMethod?.id;
         return GestureDetector(
-          onTap: () {},
+          onTap: () {
+            trip.travelMethod = e;
+            setTrip(trip: trip, context: context);
+          },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -95,7 +135,7 @@ class TravelMethodWidget extends StatelessWidget {
                 ),
                 child: QImage(
                   imageUrl: e.icon ?? "",
-                  height: 30,
+                  height: 28,
                   color: selected ? Colors.white : Colors.black,
                 ),
               ),
@@ -111,4 +151,8 @@ class TravelMethodWidget extends StatelessWidget {
       }).toList(),
     );
   }
+}
+
+void setTrip({required Trip trip, required BuildContext context}) {
+  context.read<NewItemCubit>().setTrip(trip);
 }

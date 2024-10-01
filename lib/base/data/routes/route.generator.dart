@@ -2,10 +2,12 @@ part of "../data.dart";
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
+    // final args = settings.arguments;
     switch (settings.name) {
-      case '/':
+      case AppRoutes.onboardingPage:
         return MaterialPageRoute(builder: (_) => const OnboadingPage());
+      case AppRoutes.noInternePage:
+        return MaterialPageRoute(builder: (_) => const NoInternetPage());
       case AppRoutes.login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case AppRoutes.register:
@@ -19,8 +21,7 @@ class RouteGenerator {
       case AppRoutes.editProfile:
         return MaterialPageRoute(builder: (_) => const EditProfile());
       case AppRoutes.tabs:
-        return MaterialPageRoute(
-            builder: (_) => TabsPage(active: args as int?));
+        return MaterialPageRoute(builder: (_) => const TabsPage());
 
       // activities
       case AppRoutes.createPackage:

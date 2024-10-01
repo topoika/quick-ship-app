@@ -22,6 +22,7 @@ class CustomError implements Exception {
     return message.contains("HandshakeException") ||
         message.contains("SocketException") ||
         message.contains("NetworkException") ||
+        message.contains("No internet connection") ||
         message.contains("ConnectionException");
   }
 }

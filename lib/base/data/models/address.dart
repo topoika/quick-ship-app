@@ -11,6 +11,9 @@ class Address {
   String? meetingPoint;
   String? dateAndTime;
 
+  String? date;
+  String? time;
+
   Address({
     this.id,
     this.country,
@@ -21,6 +24,8 @@ class Address {
     this.longitude,
     this.meetingPoint,
     this.dateAndTime,
+    this.date,
+    this.time,
   });
 
   Map<String, dynamic> toMap() {

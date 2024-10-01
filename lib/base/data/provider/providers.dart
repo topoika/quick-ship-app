@@ -1,7 +1,11 @@
 part of "export.provider.dart";
 
 List<SingleChildWidget> blocProvider({required BuildContext context}) => [
-      // BlocProvider<CllanBloc>(create: (context) => CllanBloc()),
+      // blocs
+      BlocProvider(create: (context) => AuthBloc()..add(GetAuthUser())),
+
+      // cubits
       BlocProvider(create: (context) => PasswordCubit()),
       BlocProvider(create: (context) => NavigatorCubit()),
+      BlocProvider(create: (context) => NewItemCubit()),
     ];

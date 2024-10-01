@@ -1,7 +1,7 @@
 part of "../data.dart";
 
-const String ROUTE_TOKEN = "1234567890";
-const String API_URL = "https://api.example.com";
+const String ROUTE_TOKEN = "RAHw2cpUYobl3FoJyokwf95OJzCbSBFW";
+const String API_URL = "http://15.237.218.2:9000/api/";
 
 class AppStrings {
   static const String appName = "Quick Ship";
@@ -56,10 +56,19 @@ class AppStrings {
   static const String contactIcon = '${icons}contact.svg';
   static const String boxIcon = '${icons}box.svg';
   static const String receiptIcon = '${icons}receipt.svg';
+  static const String noWifiImage = '${images}no-wifi.png';
 
   // home icons
   static const String itanaryIcon = '${icons}itanary.svg';
   static const String shipmentsIcon = '${icons}Shipments.svg';
   static const String makeMoneyImage = '${images}make-money.png';
   static const String inviteFriendsImage = '${images}invite-friend.png';
+
+  // dialog images
+  static const String successImage = '${icons}done.svg';
+  static const String warningImage = '${images}warning.png';
+  static const String infoImage = '${images}save_info.png';
+  static const String noData = '${images}no-data.png';
+  static const String errorImage = '${images}error.png';
+  static const String newOrderIcon = '${icons}new-order.svg';
 }

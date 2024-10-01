@@ -64,5 +64,8 @@ class SytemStyle {
         statusBarBrightness: Brightness.light,
       ),
     );
+    if (Platform.isAndroid) {
+      AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
+    }
   }
 }

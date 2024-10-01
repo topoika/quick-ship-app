@@ -1,6 +1,7 @@
 library pages;
 
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,8 @@ import '../components/components.dart';
 
 // views
 part 'onboarding.dart';
+part "splash.dart";
+part 'no.internet.page.dart';
 
 // auth
 part 'auth/login.dart';
@@ -27,6 +30,7 @@ part 'auth/otp.verification.dart';
 part 'tabs/tabs.dart';
 part "tabs/settings.dart";
 part 'tabs/home.dart';
+part 'tabs/chat.dart';
 
 // user
 part 'user/edit.profile.dart';
