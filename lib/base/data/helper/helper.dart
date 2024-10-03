@@ -13,6 +13,11 @@ String formatToDate({required DateTime date}) {
   return DateFormat('yyyy-MM-dd').format(date);
 }
 
+String tripDateFormat({required String date}) {
+  final DateTime dateTime = DateFormat('yyyy-MM-dd hh:mm a').parse(date);
+  return DateFormat('MMM d, hh:mm a').format(dateTime);
+}
+
 String formatToTime({required DateTime date}) {
   return DateFormat('hh:mm a').format(date);
 }
@@ -21,6 +26,27 @@ DateTime formatToDateAndTime({required String date, required String time}) {
   final DateTime dateTime =
       DateFormat('yyyy-MM-dd hh:mm a').parse('$date $time');
   return dateTime;
+}
+
+String? capitalize(String? s) {
+  if (s == null || s.isEmpty) {
+    return null;
+  }
+  return s[0].toUpperCase() + s.substring(1);
+}
+
+// write a function to return an address name from the address model
+String getAddressName(Address address) {
+  String name = "";
+
+  if (address.nameAddress != null) {
+    name += "${capitalize(address.nameAddress)}";
+  }
+
+  if (address.city != null) {
+    name += " - ${capitalize(address.city) ?? "N/A"}";
+  }
+  return name;
 }
 
 Future<Address?> pickLocation(
@@ -48,11 +74,11 @@ Future<Address?> pickLocation(
         Placemark place = placemarks.first;
 
         return Address(
-          country: place.country ?? '',
+          country: place.country,
           state: place.administrativeArea ?? '',
           latitude: lat,
           longitude: lng,
-          city: place.locality ?? '',
+          city: place.locality,
           nameAddress: result.formattedAddress ?? "Unkown Address",
           dateAndTime: address?.dateAndTime,
           meetingPoint: address?.meetingPoint,

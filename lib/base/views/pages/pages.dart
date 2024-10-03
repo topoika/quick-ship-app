@@ -30,7 +30,9 @@ part 'auth/otp.verification.dart';
 part 'tabs/tabs.dart';
 part "tabs/settings.dart";
 part 'tabs/home.dart';
+part 'tabs/trips.dart';
 part 'tabs/chat.dart';
+part 'tabs/shipments.dart';
 
 // user
 part 'user/edit.profile.dart';
@@ -39,3 +41,6 @@ part 'user/edit.profile.dart';
 part 'activities/package/create.package.dart';
 part 'activities/trip/create.trip.dart';
 part 'activities/trip/trip.details.dart';
+
+// shipments
+part 'activities/shipment/rate.shipment.dart';

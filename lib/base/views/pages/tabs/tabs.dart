@@ -89,9 +89,9 @@ class TabsPage extends StatelessWidget {
       case 0:
         return const HomePage();
       case 1:
-        return const SettingsPage();
+        return const TripsPage();
       case 2:
-        return const SettingsPage();
+        return const ShipmentsPage();
       case 3:
         return const ChatsPage();
       case 4:

@@ -5,8 +5,6 @@ class CreateTrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
     Trip trip = context.watch<NewItemCubit>().trip;
     bool isEdit = trip.id != null;
     return PopScope(
@@ -86,6 +84,7 @@ class CreateTrip extends StatelessWidget {
                   NewItemInputField(
                     hint: "Meeting Point",
                     type: "address",
+                    init: trip.departure?.meetingPoint,
                     onSaved: (value) {
                       trip.departure?.meetingPoint = value;
                       setTrip(trip: trip, context: context);
@@ -152,6 +151,7 @@ class CreateTrip extends StatelessWidget {
                   NewItemInputField(
                     hint: "Meeting Point",
                     type: "address",
+                    init: trip.destination?.meetingPoint,
                     onSaved: (value) {
                       trip.destination?.meetingPoint = value;
                       setTrip(trip: trip, context: context);
@@ -162,7 +162,7 @@ class CreateTrip extends StatelessWidget {
                       Expanded(
                         child: SelectInputField(
                           hint: "Date",
-                          value: trip.departure?.date,
+                          value: trip.destination?.date,
                           hasValue: trip.departure?.date != null,
                           onTap: () async {
                             await pickDate(context).then((value) {
@@ -202,6 +202,7 @@ class CreateTrip extends StatelessWidget {
                   ),
                   DropDownInputWidget(
                     required: true,
+                    init: capitalize(trip.packagePreference),
                     items: const [
                       "Small",
                       "Medium",
@@ -211,7 +212,7 @@ class CreateTrip extends StatelessWidget {
                     ],
                     onSaved: (value) {
                       trip.packagePreference =
-                          value.repalceAll(" ", "-").toLowerCase();
+                          value.replaceAll(" ", "-").toLowerCase();
                       setTrip(trip: trip, context: context);
                     },
                   ),
@@ -224,6 +225,7 @@ class CreateTrip extends StatelessWidget {
                   NewItemInputField(
                     hint: "Guide to meet Shipper",
                     type: "description",
+                    init: trip.guideToMeetingPoint,
                     onSaved: (value) {
                       trip.guideToMeetingPoint = value;
                       setTrip(trip: trip, context: context);
@@ -237,6 +239,7 @@ class CreateTrip extends StatelessWidget {
                   ),
                   NewItemInputField(
                     hint: "Postage Fee",
+                    init: trip.postageFee.toString(),
                     type: "money",
                     onSaved: (value) {
                       trip.postageFee = double.parse(value!);
@@ -244,22 +247,55 @@ class CreateTrip extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 20),
-                  PrimaryButton(
-                    text: "Go Live",
-                    onPressed: () {
-                      validationErrors.clear();
-                      if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
-                      } else {
-                        if (validationErrors.isNotEmpty) {
-                          log("Validation Error: $validationErrors");
-                          showCustomToast(
-                            message: validationErrors[0],
-                            type: "err",
-                          );
-                        }
+                  BlocListener<TripBloc, TripStates>(
+                    listener: (context, state) {
+                      if (state is TripCreated) {
+                        showCustomToast(
+                            message: "Trip Created Successfully", type: "suc");
+                        context.read<NavigatorCubit>().setIndex(1);
+                        context.read<NewItemCubit>().clear();
+                        context.read<TripBloc>().add(FetchUserTripsEvent());
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, AppRoutes.tabs, (route) => false);
+                      }
+                      if (state is TripUpdated) {
+                        showCustomToast(
+                            message: "Trip Updated Successfully", type: "suc");
+                        context.read<NavigatorCubit>().setIndex(1);
+                        context.read<NewItemCubit>().clear();
+                        context.read<TripBloc>().add(FetchUserTripsEvent());
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, AppRoutes.tabs, (route) => false);
+                      }
+                      if (state is TripError) {
+                        showCustomToast(message: state.message, type: "err");
                       }
                     },
+                    child: BlocBuilder<TripBloc, TripStates>(
+                      builder: (context, state) {
+                        return PrimaryButton(
+                          text: "Go Live",
+                          loading: state is TripsLoading,
+                          onPressed: () {
+                            validationErrors.clear();
+                            if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
+                              context.read<TripBloc>().add(isEdit
+                                  ? UpdateTripEvent(trip: trip)
+                                  : CreateTripEvent(trip: trip));
+                            } else {
+                              if (validationErrors.isNotEmpty) {
+                                log("Validation Error: $validationErrors");
+                                showCustomToast(
+                                  message: validationErrors[0],
+                                  type: "err",
+                                );
+                              }
+                            }
+                          },
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(height: 20),
                 ],

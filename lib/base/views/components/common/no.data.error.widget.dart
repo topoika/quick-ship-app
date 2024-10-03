@@ -43,12 +43,12 @@ class ErrorNoDataWidget extends StatelessWidget {
             TextButton(
               onPressed: () => onRetry!(),
               child: Text(
-                "Retry",
+                "Try Again",
                 textAlign: TextAlign.center,
                 textScaler: TextScaler.noScaling,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
               ),

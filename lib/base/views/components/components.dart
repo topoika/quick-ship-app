@@ -25,6 +25,7 @@ part "common/image.provider.dart";
 part "common/buttons.dart";
 part "common/custom.dialog.dart";
 part "common/no.data.error.widget.dart";
+part "common/loading.widgets.dart";
 
 // inputs
 part 'inputs/text.input.field.dart';
@@ -39,6 +40,10 @@ part 'home/invite.join.community.widget.dart';
 
 // trip page widget
 part 'trip/create.trip.widgets.dart';
+part 'trip/trip.items.dart';
 
 // package
 part 'package/package.input.widgets.dart';
+
+// order
+part 'order/order.items.dart';

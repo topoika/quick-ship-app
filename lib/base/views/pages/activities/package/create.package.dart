@@ -79,7 +79,7 @@ class _CreatePackageState extends State<CreatePackage> {
                     },
                     child: packageImage.isEmpty && !isEdit
                         ? Container(
-                            height: context.height * 0.25,
+                            height: context.height * 0.2,
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.center,

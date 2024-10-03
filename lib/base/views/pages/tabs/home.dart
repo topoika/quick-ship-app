@@ -187,7 +187,7 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const TextVariation(
-                    text: "Recent Orders",
+                    text: "Recent Activities",
                     size: 16,
                     weight: FontWeight.w600,
                   ),
@@ -196,23 +196,7 @@ class HomePage extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: 5,
                     itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.only(top: 10),
-                        padding: const EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: context.primaryColor.withOpacity(.09),
-                              spreadRadius: .4,
-                              blurRadius: .5,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: const Text("Home"),
-                      );
+                      return ShipmentItemWidget(shipment: Shipment());
                     },
                   ),
                 ],

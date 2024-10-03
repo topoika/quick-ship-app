@@ -38,7 +38,7 @@ class Address {
       'latitude': latitude,
       'longitude': longitude,
       'meetingPoint': meetingPoint,
-      'dateAndTime': dateAndTime,
+      'dateAndTime': "${date ?? ""} ${time ?? ""}",
     };
   }
 
@@ -50,8 +50,12 @@ class Address {
       city: map['city'] != null ? map['city'] as String : null,
       nameAddress:
           map['nameAddress'] != null ? map['nameAddress'] as String : null,
-      latitude: map['latitude'] != null ? map['latitude'] as double : null,
-      longitude: map['longitude'] != null ? map['longitude'] as double : null,
+      latitude: map['latitude'] != null
+          ? double.parse(map['latitude'].toString())
+          : null,
+      longitude: map['longitude'] != null
+          ? double.parse(map['longitude'].toString())
+          : null,
       meetingPoint:
           map['meetingPoint'] != null ? map['meetingPoint'] as String : null,
       dateAndTime:

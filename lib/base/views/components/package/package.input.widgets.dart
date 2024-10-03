@@ -17,14 +17,14 @@ class ImagesWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: SizedBox(
-        height: context.height * 0.25,
+        height: context.height * 0.2,
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             ...packageImage.map(
               (i) => Container(
                 margin: const EdgeInsets.only(right: 15),
-                height: context.height * 0.25,
+                height: context.height * 0.2,
                 width: context.width * 0.7,
                 alignment: Alignment.topRight,
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -56,7 +56,7 @@ class ImagesWidget extends StatelessWidget {
             ...(package.images ?? []).map(
               (i) => Container(
                 margin: const EdgeInsets.only(right: 15),
-                height: context.height * 0.25,
+                height: context.height * 0.2,
                 width: context.width * 0.7,
                 alignment: Alignment.topRight,
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),

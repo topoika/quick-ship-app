@@ -30,6 +30,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CreateTrip());
       case AppRoutes.tripDetails:
         return MaterialPageRoute(builder: (_) => const TripDetails());
+      case AppRoutes.rateShipmentPage:
+        return MaterialPageRoute(builder: (_) => const RateShipmentPage());
       default:
         return _errorRoute();
     }

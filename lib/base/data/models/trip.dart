@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of "../data.dart";
 
 class Trip {
@@ -12,7 +11,6 @@ class Trip {
   double? postageFee;
   String? licenseNumber;
   String? vehicleIdentity;
-
   Address? departure;
   Address? destination;
   User? postman;
@@ -25,12 +23,70 @@ class Trip {
     this.guideToMeetingPoint,
     this.packagePreference,
     this.postageFee,
+    this.licenseNumber,
+    this.vehicleIdentity,
     this.departure,
     this.destination,
     this.postman,
-    this.licenseNumber,
-    this.vehicleIdentity,
   });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'travelMethodId': travelMethod?.id,
+      'travelRole': travelRole,
+      'allowRequest': allowRequest ?? true,
+      'status': status ?? "pending",
+      'guideToMeetingPoint': guideToMeetingPoint,
+      'packagePreference': packagePreference,
+      'postageFee': postageFee,
+      'licenseNumber': licenseNumber,
+      'vehicleIdentity': vehicleIdentity,
+      'departureAddress': departure?.toMap(),
+      'destinationAddress': destination?.toMap(),
+      'postman': postman?.toMap(),
+    };
+  }
+
+  factory Trip.fromMap(Map<String, dynamic> map) {
+    return Trip(
+      id: map['id'] != null ? map['id'] as int : null,
+      travelMethod: map['travelMethodId'] != null
+          ? travelMethods.firstWhere(
+              (element) => element.id == map['travelMethodId'],
+              orElse: () => TravelMethod(),
+            )
+          : null,
+      travelRole:
+          map['travelRole'] != null ? map['travelRole'] as String : null,
+      allowRequest:
+          map['allowRequest'] != null ? map['allowRequest'] as bool : null,
+      status: map['status'] != null ? map['status'] as String : null,
+      guideToMeetingPoint: map['guideToMeetingPoint'] != null
+          ? map['guideToMeetingPoint'] as String
+          : null,
+      packagePreference: map['packagePreference'] != null
+          ? map['packagePreference'] as String
+          : null,
+      postageFee: map['postageFee'] != null
+          ? double.parse(map['postageFee'].toString())
+          : null,
+      licenseNumber:
+          map['licenseNumber'] != null ? map['licenseNumber'] as String : null,
+      vehicleIdentity: map['vehicleIdentity'] != null
+          ? map['vehicleIdentity'] as String
+          : null,
+      departure: map['departure'] != null
+          ? Address.fromMap(map['departure'] as Map<String, dynamic>)
+          : null,
+      destination: map['destination'] != null
+          ? Address.fromMap(map['destination'] as Map<String, dynamic>)
+          : null,
+      postman: map['postman'] != null
+          ? User.fromMap(map['postman'] as Map<String, dynamic>)
+          : null,
+    );
+  }
 }
 
 class TravelMethod {

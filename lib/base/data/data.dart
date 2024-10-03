@@ -34,3 +34,4 @@ part 'models/user.dart';
 part 'models/trip.dart';
 part 'models/package.dart';
 part 'models/address.dart';
+part 'models/shipment.dart';

@@ -6,7 +6,6 @@ class YouAreAWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Trip trip = context.watch<NewItemCubit>().trip;
-
     return Visibility(
       visible: ![1, 4].contains(trip.travelMethod?.id),
       child: Column(
@@ -54,6 +53,7 @@ class YouAreAWidget extends StatelessWidget {
           NewItemInputField(
             hint: "Vehicle Identity",
             type: "vehicle",
+            init: trip.vehicleIdentity,
             onSaved: (value) {
               trip.vehicleIdentity = value;
               setTrip(trip: trip, context: context);
@@ -61,6 +61,7 @@ class YouAreAWidget extends StatelessWidget {
           ),
           NewItemInputField(
             hint: "License Plate",
+            init: trip.licenseNumber,
             type: "license",
             onSaved: (value) {
               trip.licenseNumber = value;

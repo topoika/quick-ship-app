@@ -21,4 +21,6 @@ class AppRoutes {
   static const String createPackage = "/CreatePackage";
   static const String createTrip = "/CreateTrip";
   static const String tripDetails = "/TripDetails";
+  static const String rateShipmentPage = "/RateShipmentPage";
+
 }
