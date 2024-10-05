@@ -1,10 +1,14 @@
 part of "../pages.dart";
 
-GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +17,7 @@ class LoginPage extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: context.horPad, vertical: 10),
           child: Form(
-            key: formKey,
+            key: loginFormKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -70,8 +74,8 @@ class LoginPage extends StatelessWidget {
                         text: "Login",
                         loading: state is AuthLoading,
                         onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            formKey.currentState!.save();
+                          if (loginFormKey.currentState!.validate()) {
+                            loginFormKey.currentState!.save();
                             context
                                 .read<AuthBloc>()
                                 .add(AuthLogin(user: activeUser.value));

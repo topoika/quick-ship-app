@@ -1,5 +1,7 @@
 part of "../../pages.dart";
 
+GlobalKey<FormState> tripFormKey = GlobalKey<FormState>();
+
 class CreateTrip extends StatelessWidget {
   const CreateTrip({super.key});
 
@@ -47,7 +49,7 @@ class CreateTrip extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: context.horPad),
             child: Form(
-              key: formKey,
+              key: tripFormKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -273,8 +275,8 @@ class CreateTrip extends StatelessWidget {
                           loading: state is TripsLoading,
                           onPressed: () {
                             validationErrors.clear();
-                            if (formKey.currentState!.validate()) {
-                              formKey.currentState!.save();
+                            if (tripFormKey.currentState!.validate()) {
+                              tripFormKey.currentState!.save();
                               setTrip(trip: trip, context: context);
                               context.read<TripBloc>().add(isEdit
                                   ? UpdateTripEvent(trip: trip)

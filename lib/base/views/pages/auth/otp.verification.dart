@@ -133,7 +133,8 @@ class _OTPVerificationState extends State<OTPVerification> {
                     if (state is AuthError) {
                       showCustomToast(message: state.message, type: "err");
                     } else if (state is VerificationSuccess) {
-                      showCustomToast(message: "Verified");
+                      showCustomToast(message: "Verified", type: "suc");
+                      activeUser.value.verified = true;
                       context.read<OtpCubit>().clear();
                       Navigator.pushNamedAndRemoveUntil(
                           context, AppRoutes.tabs, (route) => false);

@@ -1,4 +1,5 @@
 part of '../pages.dart';
+GlobalKey<FormState> forgotPasswordFormKey = GlobalKey<FormState>();
 
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({super.key});
@@ -11,7 +12,7 @@ class ForgotPassword extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: context.horPad, vertical: 10),
           child: Form(
-            key: formKey,
+            key: forgotPasswordFormKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -68,8 +69,8 @@ class ForgotPassword extends StatelessWidget {
                         text: "Send OTP",
                         loading: state is AuthLoading,
                         onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            formKey.currentState!.save();
+                          if (forgotPasswordFormKey.currentState!.validate()) {
+                            forgotPasswordFormKey.currentState!.save();
                             context.read<AuthBloc>().add(RequestResetPassword(
                                 email: activeUser.value.email!));
                           } else {

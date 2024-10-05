@@ -1,5 +1,7 @@
 part of "../pages.dart";
 
+GlobalKey<FormState> passwordFormKey = GlobalKey<FormState>();
+
 class ResetPassword extends StatelessWidget {
   const ResetPassword({super.key});
 
@@ -13,7 +15,7 @@ class ResetPassword extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: context.horPad, vertical: 10),
           child: Form(
-            key: formKey,
+            key: passwordFormKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -75,8 +77,8 @@ class ResetPassword extends StatelessWidget {
                       return PrimaryButton(
                         text: "Submit",
                         onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            formKey.currentState!.save();
+                          if (passwordFormKey.currentState!.validate()) {
+                            passwordFormKey.currentState!.save();
                             context.read<AuthBloc>().add(ResetPasswordEvent(
                                 otp: otp,
                                 password: activeUser.value.password!));
