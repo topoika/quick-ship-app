@@ -97,8 +97,9 @@ class _CreatePackageState extends State<CreatePackage> {
                                   textAlign: TextAlign.center,
                                   textScaleFactor: 1,
                                   style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ],
                             ),
@@ -270,6 +271,12 @@ class _CreatePackageState extends State<CreatePackage> {
                       ),
                     ],
                   ),
+                  NewItemInputField(
+                    hint: "Weight (kg)",
+                    type: "number",
+                    init: package.weight?.toString(),
+                    onSaved: (value) => package.weight = double.parse(value!),
+                  ),
                   const SizedBox(height: 10),
                   const TextVariation(
                     text: "Reciever Details",
@@ -332,22 +339,69 @@ class _CreatePackageState extends State<CreatePackage> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  PrimaryButton(
-                    text: "Submit",
-                    onPressed: () {
-                      validationErrors.clear();
-                      if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
-                      } else {
-                        if (validationErrors.isNotEmpty) {
-                          log("Validation Error: $validationErrors");
-                          showCustomToast(
-                            message: validationErrors[0],
-                            type: "err",
-                          );
-                        }
+                  BlocListener<PackageBloc, PackageStates>(
+                    listener: (context, state) {
+                      if (state is PackageCreated) {
+                        showCustomToast(
+                            message:
+                                "Package created successfully ${state.package.id}",
+                            type: "suc");
+                        context.read<PackageBloc>().add(FetchUserPackages());
+                        context.read<NewItemCubit>().clear();
+                        context
+                            .read<DetailsItemCubit>()
+                            .setId(state.package.id!);
+                        Navigator.pushReplacementNamed(
+                            context, AppRoutes.packageDetails);
+                      } else if (state is PackageUpdated) {
+                        showCustomToast(
+                            message: "Package updated successfully",
+                            type: "success");
+                        context.read<PackageBloc>().add(FetchUserPackages());
+                        context.read<NewItemCubit>().clear();
+                        context
+                            .read<DetailsItemCubit>()
+                            .setId(state.package.id!);
+                        Navigator.pushReplacementNamed(
+                            context, AppRoutes.packageDetails);
+                      } else if (state is PackageError) {
+                        showCustomToast(message: state.message, type: "err");
                       }
                     },
+                    child: BlocBuilder<PackageBloc, PackageStates>(
+                      builder: (context, state) {
+                        return PrimaryButton(
+                          text: "Submit",
+                          loading: state is PackageLoading,
+                          onPressed: () {
+                            validationErrors.clear();
+                            if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
+                              if (packageImage.isEmpty && !isEdit) {
+                                showCustomToast(
+                                    message: "Please upload package images",
+                                    type: "err");
+                              } else {
+                                if (isEdit) {
+                                  context.read<PackageBloc>().add(UpdatePackage(
+                                      package: package, images: packageImage));
+                                } else {
+                                  context.read<PackageBloc>().add(
+                                      CreatePackageEvent(
+                                          package: package,
+                                          images: packageImage));
+                                }
+                              }
+                            } else {
+                              if (validationErrors.isNotEmpty) {
+                                showCustomToast(
+                                    message: validationErrors[0], type: "err");
+                              }
+                            }
+                          },
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(height: 20),
                 ],

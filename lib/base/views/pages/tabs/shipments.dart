@@ -19,22 +19,24 @@ class ShipmentsPage extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: context.horPad),
-        itemBuilder: (context, index) {
-          return ShipmentItemWidget(shipment: Shipment());
-        },
-      ),
+      body:
 
-      // Center(
-      //   child: ErrorNoDataWidget(
-      //     type: "no-data",
-      //     message: "No shipments yet",
-      //     onRetry: () {},
-      //   ),
-      // ),
+          // ListView.builder(
+          //   itemCount: 10,
+          //   shrinkWrap: true,
+          //   padding: EdgeInsets.symmetric(horizontal: context.horPad),
+          //   itemBuilder: (context, index) {
+          //     return ShipmentItemWidget(shipment: Shipment());
+          //   },
+          // ),
+
+          Center(
+        child: ErrorNoDataWidget(
+          type: "no-data",
+          message: "No shipments yet",
+          onRetry: () {},
+        ),
+      ),
     );
   }
 }

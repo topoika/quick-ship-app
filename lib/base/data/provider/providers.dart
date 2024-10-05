@@ -5,6 +5,8 @@ List<SingleChildWidget> blocProvider({required BuildContext context}) => [
       BlocProvider(create: (context) => AuthBloc()..add(GetAuthUser())),
       BlocProvider(create: (context) => TripBloc()),
       BlocProvider(create: (context) => TripDetailsBloc()),
+      BlocProvider(create: (context) => PackageBloc()),
+      BlocProvider(create: (context) => PackageDetailsBloc()),
 
       // cubits
       BlocProvider(create: (context) => PasswordCubit()),

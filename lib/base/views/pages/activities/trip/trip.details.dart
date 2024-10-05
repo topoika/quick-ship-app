@@ -277,10 +277,47 @@ class TripDetailsBody extends StatelessWidget {
               replacement: Row(
                 children: <Widget>[
                   Expanded(
-                    child: PrimaryButtonUnfilled(
-                      text: "Delete",
-                      onPressed: () {},
-                      color: Colors.red[400],
+                    child: BlocListener<TripBloc, TripStates>(
+                      listener: (context, state) {
+                        if (state is TripError) {
+                          showCustomToast(message: state.message, type: "err");
+                        } else if (state is TripDeleted) {
+                          showCustomToast(message: "Trip Deleted", type: "suc");
+                          context.read<TripBloc>().add(FetchUserTripsEvent());
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: BlocBuilder<TripBloc, TripStates>(
+                        builder: (context, state) {
+                          return PrimaryButtonUnfilled(
+                            text: "Delete",
+                            loading: state is TripLoading,
+                            onPressed: () {
+                              showCustomDialog(
+                                context: context,
+                                data: DialogData(
+                                  title: "Confirm Delete",
+                                  description:
+                                      "Are you sure you want to delete this trip?",
+                                  noText: "Cancel",
+                                  yesText: "Delete",
+                                  yesOnPressed: () {
+                                    context
+                                        .read<TripBloc>()
+                                        .add(DeleteTripEvent(id: trip.id!));
+                                    Navigator.pop(context);
+                                  },
+                                  noOnPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  type: "warning",
+                                ),
+                              );
+                            },
+                            color: Colors.red[400],
+                          );
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(width: 15),

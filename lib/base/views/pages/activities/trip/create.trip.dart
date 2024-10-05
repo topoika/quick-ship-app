@@ -87,7 +87,6 @@ class CreateTrip extends StatelessWidget {
                     init: trip.departure?.meetingPoint,
                     onSaved: (value) {
                       trip.departure?.meetingPoint = value;
-                      setTrip(trip: trip, context: context);
                     },
                   ),
                   Row(
@@ -154,7 +153,6 @@ class CreateTrip extends StatelessWidget {
                     init: trip.destination?.meetingPoint,
                     onSaved: (value) {
                       trip.destination?.meetingPoint = value;
-                      setTrip(trip: trip, context: context);
                     },
                   ),
                   Row(
@@ -213,7 +211,6 @@ class CreateTrip extends StatelessWidget {
                     onSaved: (value) {
                       trip.packagePreference =
                           value.replaceAll(" ", "-").toLowerCase();
-                      setTrip(trip: trip, context: context);
                     },
                   ),
                   const SizedBox(height: 10),
@@ -228,7 +225,6 @@ class CreateTrip extends StatelessWidget {
                     init: trip.guideToMeetingPoint,
                     onSaved: (value) {
                       trip.guideToMeetingPoint = value;
-                      setTrip(trip: trip, context: context);
                     },
                   ),
                   const SizedBox(height: 10),
@@ -239,11 +235,10 @@ class CreateTrip extends StatelessWidget {
                   ),
                   NewItemInputField(
                     hint: "Postage Fee",
-                    init: trip.postageFee.toString(),
+                    init: trip.postageFee?.toString(),
                     type: "money",
                     onSaved: (value) {
                       trip.postageFee = double.parse(value!);
-                      setTrip(trip: trip, context: context);
                     },
                   ),
                   const SizedBox(height: 20),
@@ -280,12 +275,12 @@ class CreateTrip extends StatelessWidget {
                             validationErrors.clear();
                             if (formKey.currentState!.validate()) {
                               formKey.currentState!.save();
+                              setTrip(trip: trip, context: context);
                               context.read<TripBloc>().add(isEdit
                                   ? UpdateTripEvent(trip: trip)
                                   : CreateTripEvent(trip: trip));
                             } else {
                               if (validationErrors.isNotEmpty) {
-                                log("Validation Error: $validationErrors");
                                 showCustomToast(
                                   message: validationErrors[0],
                                   type: "err",

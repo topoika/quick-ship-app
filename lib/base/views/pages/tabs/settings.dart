@@ -112,7 +112,7 @@ class SettingsPage extends StatelessWidget {
                 title: "My Packages",
                 image: AppStrings.boxIcon,
                 onTap: () {
-                  showCustomToast(message: "Coming soon");
+                Navigator.pushNamed(context, AppRoutes.myPackages);
                 },
               ),
               SettingsItem(

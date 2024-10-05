@@ -16,11 +16,12 @@ class AppRoutes {
 
   // user
   static const String editProfile = "/EditProfile";
+  static const String myPackages = "/MyPackages";
 
   // activities
   static const String createPackage = "/CreatePackage";
   static const String createTrip = "/CreateTrip";
   static const String tripDetails = "/TripDetails";
+  static const String packageDetails = "/PackageDetails";
   static const String rateShipmentPage = "/RateShipmentPage";
-
 }

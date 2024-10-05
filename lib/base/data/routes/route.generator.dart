@@ -20,6 +20,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ResetPassword());
       case AppRoutes.editProfile:
         return MaterialPageRoute(builder: (_) => const EditProfile());
+      case AppRoutes.myPackages:
+        return MaterialPageRoute(builder: (_) => const MyPackages());
       case AppRoutes.tabs:
         return MaterialPageRoute(builder: (_) => const TabsPage());
 
@@ -30,6 +32,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CreateTrip());
       case AppRoutes.tripDetails:
         return MaterialPageRoute(builder: (_) => const TripDetails());
+      case AppRoutes.packageDetails:
+        return MaterialPageRoute(builder: (_) => const PackageDetails());
       case AppRoutes.rateShipmentPage:
         return MaterialPageRoute(builder: (_) => const RateShipmentPage());
       default:

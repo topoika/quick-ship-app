@@ -44,6 +44,8 @@ part 'trip/trip.items.dart';
 
 // package
 part 'package/package.input.widgets.dart';
+part 'package/package.list.item.dart';
+part 'package/package.images.dart';
 
 // order
 part 'order/order.items.dart';

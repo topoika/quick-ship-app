@@ -8,6 +8,7 @@ class TripBloc extends Bloc<TripEvents, TripStates> {
   TripBloc() : super(TripInitial()) {
     on<CreateTripEvent>(createTrip);
     on<FetchUserTripsEvent>(getUserTrips);
+    on<DeleteTripEvent>(deleteTrip);
   }
 
   void createTrip(event, emit) async {
@@ -25,6 +26,15 @@ class TripBloc extends Bloc<TripEvents, TripStates> {
     try {
       final trips = await repo.getUserTrips();
       emit(TripsLoaded(trips: trips));
+    } catch (e) {
+      emit(TripError(message: e.toString()));
+    }
+  }
+  void deleteTrip(event, emit) async {
+    emit(TripsLoading());
+    try {
+      await repo.deleteTrip(id: event.id);
+      emit(TripDeleted());
     } catch (e) {
       emit(TripError(message: e.toString()));
     }

@@ -44,4 +44,18 @@ class TripRepo extends NetworkRequest {
       rethrow;
     }
   }
+
+  // delete trip
+  Future<void> deleteTrip({required int id}) async {
+    try {
+      final response = await delete("trips/delete?id=$id");
+      if (response['status'] == false) {
+        throw CustomError(response['message']);
+      } else {
+        return;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -59,7 +59,6 @@ Future<Address?> pickLocation(
           initialPosition: const LatLng(56.1304, 106.3468),
           useCurrentLocation: true,
           onPlacePicked: (result) {
-            log("Place picked: $result");
             Navigator.of(context).pop(result);
           },
         ),
@@ -72,14 +71,13 @@ Future<Address?> pickLocation(
       List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks.first;
-
         return Address(
           country: place.country,
           state: place.administrativeArea ?? '',
           latitude: lat,
           longitude: lng,
           city: place.locality,
-          nameAddress: result.formattedAddress ?? "Unkown Address",
+          nameAddress: result.name ?? result.formattedAddress,
           dateAndTime: address?.dateAndTime,
           meetingPoint: address?.meetingPoint,
         );

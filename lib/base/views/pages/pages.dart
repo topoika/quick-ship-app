@@ -1,7 +1,6 @@
 library pages;
 
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -36,11 +35,13 @@ part 'tabs/shipments.dart';
 
 // user
 part 'user/edit.profile.dart';
+part "user/my.packages.dart";
 
 // activities
 part 'activities/package/create.package.dart';
 part 'activities/trip/create.trip.dart';
 part 'activities/trip/trip.details.dart';
+part 'activities/package/package.details.dart';
 
 // shipments
 part 'activities/shipment/rate.shipment.dart';

@@ -15,7 +15,7 @@ String? validator(String? value, String type) {
     case "confirm_password":
       error = validatePassword(value, confirm: true);
       break;
-    case "phone":
+    case "phone" || "phone_number":
       error = validatePhone(value);
       break;
     case "id_number":
@@ -30,8 +30,14 @@ String? validator(String? value, String type) {
     case "money":
       error = validateMoney(value);
       break;
+    case "number":
+      error = validateNumber(value);
+      break;
     case "address":
       error = value!.length < 4 ? "Enter a valid place name" : null;
+      break;
+    case "item_name":
+      error = value!.length < 4 ? "Enter a valid item name" : null;
       break;
     case "license":
       error = value!.length < 4 ? "Enter valid Licence Plate" : null;
@@ -50,6 +56,14 @@ String? validator(String? value, String type) {
   }
   validationErrors = validationErrors.toSet().toList();
   return error;
+}
+
+// validate number
+String? validateNumber(String? value) {
+  if (value == null || value.isEmpty) {
+    return "Enter a valid dimension";
+  }
+  return null;
 }
 
 // validate money
@@ -165,7 +179,7 @@ TextInputType getTextInputType(String type) {
       return TextInputType.emailAddress;
     case "date":
       return TextInputType.datetime;
-    case "phone":
+    case "phone" || "phone_number":
       return TextInputType.phone;
     default:
       return TextInputType.text;

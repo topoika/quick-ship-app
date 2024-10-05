@@ -1,9 +1,14 @@
 library providers;
 
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as path;
+import 'package:http_parser/http_parser.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,15 +24,19 @@ part "cubit/details.item.cubit.dart";
 // blocs
 part "bloc/auth.bloc.dart";
 part "bloc/trip.bloc.dart";
+part "bloc/package.bloc.dart";
 
 // events
 part "events/auth.events.dart";
 part "events/trip.events.dart";
+part "events/package.events.dart";
 
 // states
 part "states/auth.states.dart";
 part "states/trip.states.dart";
+part "states/package.states.dart";
 
 // repos
 part "repos/auth.repo.dart";
 part "repos/trips.repo.dart";
+part "repos/package.repo.dart";

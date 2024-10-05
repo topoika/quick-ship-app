@@ -16,8 +16,8 @@ class UpdateTripEvent extends TripEvents {
 }
 
 class DeleteTripEvent extends TripEvents {
-  final Trip trip;
-  DeleteTripEvent({required this.trip});
+  final int id;
+  DeleteTripEvent({required this.id});
 }
 
 class FetchTripEvent extends TripEvents {
