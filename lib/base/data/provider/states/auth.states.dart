@@ -30,17 +30,28 @@ class LoginSuccess extends AuthState {
 }
 
 class RegisterSuccess extends AuthState {
-  final User user;
+  final String otp;
 
-  RegisterSuccess({required this.user});
+  RegisterSuccess({required this.otp});
 
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [otp];
 }
 
 class DeleteAccountSuccess extends AuthState {}
 
 class LogoutSuccess extends AuthState {}
+
+class PasswordResetSuccess extends AuthState {}
+
+class PasswordOTPRequestLoaded extends AuthState {
+  final String otp;
+
+  PasswordOTPRequestLoaded({required this.otp});
+
+  @override
+  List<Object> get props => [otp];
+}
 
 class AuthError extends AuthState {
   final String message;
@@ -57,4 +68,12 @@ class EmailVerificationSent extends AuthState {
 
   @override
   List<Object> get props => [otp];
+}
+
+class VerificationSuccess extends AuthState {
+  final User user;
+  VerificationSuccess({required this.user});
+
+  @override
+  List<Object> get props => [user];
 }

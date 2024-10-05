@@ -41,12 +41,11 @@ class RequestEmailOtp extends AuthEvents {}
 
 class VerifyEmailOtp extends AuthEvents {
   final String otp;
-  final String token;
 
-  VerifyEmailOtp({required this.otp, required this.token});
+  VerifyEmailOtp({required this.otp});
 
   @override
-  List<Object> get props => [otp, token];
+  List<Object> get props => [otp];
 }
 
 class RequestResetPassword extends AuthEvents {
@@ -56,4 +55,12 @@ class RequestResetPassword extends AuthEvents {
 
   @override
   List<Object> get props => [email];
+}
+
+class ResetPasswordEvent extends AuthEvents {
+  final String otp;
+  final String password;
+  ResetPasswordEvent({required this.otp, required this.password});
+  @override
+  List<Object> get props => [otp, password];
 }

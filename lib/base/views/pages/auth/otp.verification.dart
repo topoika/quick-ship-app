@@ -33,6 +33,9 @@ class _OTPVerificationState extends State<OTPVerification> {
 
   @override
   Widget build(BuildContext context) {
+    String otp = context.read<OtpCubit>().state.otp ?? "";
+    String type = context.read<OtpCubit>().state.type ?? "";
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -112,11 +115,49 @@ class _OTPVerificationState extends State<OTPVerification> {
                 ),
               ),
               const SizedBox(height: 15),
-              PrimaryButton(
-                text: "Verify",
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.resetPassword);
-                },
+              Visibility(
+                visible: type == "verifying",
+                replacement: PrimaryButton(
+                  text: "Verify",
+                  onPressed: () {
+                    if (sms.text == otp) {
+                      showCustomToast(message: "Verified", type: "suc");
+                      Navigator.pushNamed(context, AppRoutes.resetPassword);
+                    } else {
+                      showCustomToast(message: "Invalid OTP code", type: "err");
+                    }
+                  },
+                ),
+                child: BlocListener<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthError) {
+                      showCustomToast(message: state.message, type: "err");
+                    } else if (state is VerificationSuccess) {
+                      showCustomToast(message: "Verified");
+                      context.read<OtpCubit>().clear();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, AppRoutes.tabs, (route) => false);
+                    }
+                  },
+                  child: BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      return PrimaryButton(
+                        text: "Verify",
+                        loading: state is AuthLoading,
+                        onPressed: () {
+                          if (sms.text == otp) {
+                            context
+                                .read<AuthBloc>()
+                                .add(VerifyEmailOtp(otp: otp));
+                          } else {
+                            showCustomToast(
+                                message: "Invalid OTP code", type: "err");
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ),
               ),
               SizedBox(height: context.height * 0.03),
               Row(
@@ -142,6 +183,11 @@ class _OTPVerificationState extends State<OTPVerification> {
                             onPressed: () {
                               setState(() => countdown = 60);
                               startCountdown();
+                              if (type == "verifying") {
+                                context.read<AuthBloc>().add(RequestEmailOtp());
+                              } else {
+                                // come on request for reset password code
+                              }
                               showCustomToast(message: "Resending OTP code");
                             },
                           ),

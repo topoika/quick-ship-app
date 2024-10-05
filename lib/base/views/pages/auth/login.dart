@@ -60,8 +60,8 @@ class LoginPage extends StatelessWidget {
                     } else if (state is LoginSuccess) {
                       showCustomToast(
                           message: "User login successfully", type: 'suc');
-                      Navigator.pushNamed(context, AppRoutes.tabs,
-                          arguments: 0);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, AppRoutes.tabs, (route) => false);
                     }
                   },
                   child: BlocBuilder<AuthBloc, AuthState>(

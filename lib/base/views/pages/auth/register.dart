@@ -79,8 +79,6 @@ class RegisterPage extends StatelessWidget {
                 required: true,
                 onSaved: (val) => activeUser.value.password = val,
               ),
-              
-              
               const SizedBox(height: 15),
               Wrap(
                 alignment: WrapAlignment.center,
@@ -102,12 +100,41 @@ class RegisterPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 15),
-              PrimaryButton(
-                text: "Register",
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, AppRoutes.tabs, (route) => false);
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthError) {
+                    showCustomToast(message: state.message, type: "err");
+                  } else if (state is EmailVerificationSent) {
+                    showCustomToast(
+                        message: "User registered successfully", type: 'suc');
+                    context
+                        .read<OtpCubit>()
+                        .setOtpState(state.otp, "verifying");
+                    Navigator.pushReplacementNamed(
+                        context, AppRoutes.otpVerification);
+                  }
                 },
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return PrimaryButton(
+                      text: "Register",
+                      loading: state is AuthLoading,
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
+                          context
+                              .read<AuthBloc>()
+                              .add(AuthRegister(user: activeUser.value));
+                        } else {
+                          if (validationErrors.isNotEmpty) {
+                            showCustomToast(
+                                message: validationErrors[0], type: "err");
+                          }
+                        }
+                      },
+                    );
+                  },
+                ),
               ),
               SizedBox(height: context.height * 0.03),
               Row(

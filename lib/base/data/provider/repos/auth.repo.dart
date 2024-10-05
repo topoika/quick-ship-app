@@ -110,4 +110,33 @@ class AuthRepo extends NetworkRequest {
       rethrow;
     }
   }
+
+  // reset password
+  Future<String> requestPassWordReset({required String email}) async {
+    try {
+      final response =
+          await post("auth/request-password-reset", {"email": email});
+      if (response['success'] == true) {
+        return response['data']['otp'];
+      } else {
+        throw CustomError(response['message']);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future resetPassword({required String otp, required String password}) async {
+    try {
+      final response = await post("auth/reset-password",
+          {"otp": otp, "password": password, "email": activeUser.value.email});
+      if (response['success'] == true) {
+        return;
+      } else {
+        throw CustomError(response['message']);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

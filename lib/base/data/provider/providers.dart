@@ -10,6 +10,7 @@ List<SingleChildWidget> blocProvider({required BuildContext context}) => [
 
       // cubits
       BlocProvider(create: (context) => PasswordCubit()),
+      BlocProvider(create: (context) => OtpCubit()),
       BlocProvider(create: (context) => NavigatorCubit()),
       BlocProvider(create: (context) => NewItemCubit()),
       BlocProvider(create: (context) => DetailsItemCubit()),
