@@ -20,7 +20,7 @@ class _SliderWithIndicatorsState extends State<SliderWithIndicators> {
     return Column(
       children: [
         SizedBox(
-          height: context.width * 0.65,
+          height: context.width * 0.85,
           width: MediaQuery.of(context).size.width,
           child: PageView.builder(
             itemCount: widget.images!.length,

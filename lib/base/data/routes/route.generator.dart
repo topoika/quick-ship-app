@@ -8,6 +8,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const OnboadingPage());
       case AppRoutes.noInternePage:
         return MaterialPageRoute(builder: (_) => const NoInternetPage());
+      case AppRoutes.faqs:
+        return MaterialPageRoute(builder: (_) => const FAQsPage());
       case AppRoutes.login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case AppRoutes.register:
@@ -22,6 +24,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const EditProfile());
       case AppRoutes.myPackages:
         return MaterialPageRoute(builder: (_) => const MyPackages());
+      case AppRoutes.myOrders:
+        return MaterialPageRoute(builder: (_) => const MyOrders());
       case AppRoutes.tabs:
         return MaterialPageRoute(builder: (_) => const TabsPage());
 
@@ -32,8 +36,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CreateTrip());
       case AppRoutes.tripDetails:
         return MaterialPageRoute(builder: (_) => const TripDetails());
+      case AppRoutes.routeTripsPage:
+        return MaterialPageRoute(builder: (_) => const RouteTripsPage());
       case AppRoutes.packageDetails:
         return MaterialPageRoute(builder: (_) => const PackageDetails());
+      case AppRoutes.packageRequest:
+        return MaterialPageRoute(builder: (_) => const PackageRequests());
       case AppRoutes.rateShipmentPage:
         return MaterialPageRoute(builder: (_) => const RateShipmentPage());
       default:

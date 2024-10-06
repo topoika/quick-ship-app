@@ -16,6 +16,7 @@ import '../components/components.dart';
 // views
 part 'onboarding.dart';
 part "splash.dart";
+part 'faqs.dart';
 part 'no.internet.page.dart';
 
 // auth
@@ -35,13 +36,16 @@ part 'tabs/shipments.dart';
 
 // user
 part 'user/edit.profile.dart';
-part "user/my.packages.dart";
+part "activities/package/my.packages.dart";
+part "user/my.orders.page.dart";
 
 // activities
 part 'activities/package/create.package.dart';
 part 'activities/trip/create.trip.dart';
 part 'activities/trip/trip.details.dart';
+part 'activities/trip/available.route.trips.dart';
 part 'activities/package/package.details.dart';
+part "activities/package/package.requests.dart";
 
 // shipments
 part 'activities/shipment/rate.shipment.dart';

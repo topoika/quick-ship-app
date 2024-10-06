@@ -36,3 +36,12 @@ class FetchRouteTripEvent extends TripEvents {
   final Package package;
   FetchRouteTripEvent({required this.package});
 }
+
+class FetchRouteTripsEvent extends TripEvents {
+  final Address destination;
+  final Address departure;
+  FetchRouteTripsEvent({required this.destination, required this.departure});
+
+  @override
+  List<Object?> get props => [destination, departure];
+}

@@ -343,14 +343,16 @@ class _CreatePackageState extends State<CreatePackage> {
                     listener: (context, state) {
                       if (state is PackageCreated) {
                         showCustomToast(
-                            message:
-                                "Package created successfully ${state.package.id}",
+                            message: "Package created successfully",
                             type: "suc");
                         context.read<PackageBloc>().add(FetchUserPackages());
+                        context
+                            .read<PackageDetailsBloc>()
+                            .add(GetPackageDetails(id: state.package.id!));
                         context.read<NewItemCubit>().clear();
                         context
                             .read<DetailsItemCubit>()
-                            .setId(state.package.id!);
+                            .setPackageId(state.package.id!);
                         Navigator.pushReplacementNamed(
                             context, AppRoutes.packageDetails);
                       } else if (state is PackageUpdated) {
@@ -361,7 +363,7 @@ class _CreatePackageState extends State<CreatePackage> {
                         context.read<NewItemCubit>().clear();
                         context
                             .read<DetailsItemCubit>()
-                            .setId(state.package.id!);
+                            .setPackageId(state.package.id!);
                         Navigator.pushReplacementNamed(
                             context, AppRoutes.packageDetails);
                       } else if (state is PackageError) {

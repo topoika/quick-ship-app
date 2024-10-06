@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of "../components.dart";
 
 class TasksWidget extends StatelessWidget {
@@ -6,6 +5,9 @@ class TasksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool awaitingVerification = (activeUser.value.verificationBack != null ||
+            activeUser.value.verificationFront != null) &&
+        activeUser.value.verified == false;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
@@ -25,8 +27,16 @@ class TasksWidget extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                // set trip to a new trip on trip cubit
-                Navigator.pushNamed(context, AppRoutes.createTrip);
+                if (awaitingVerification) {
+                  showCustomToast(
+                      message: "Please wait for verification to continue");
+                } else if (activeUser.value.verified == false) {
+                  showCustomToast(
+                      message: "Complete your profile to be verified");
+                  Navigator.pushNamed(context, AppRoutes.editProfile);
+                } else {
+                  Navigator.pushNamed(context, AppRoutes.createTrip);
+                }
               },
               child: Column(
                 children: <Widget>[
@@ -78,8 +88,16 @@ class TasksWidget extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                // set package to a new trip on package cubit
-                Navigator.pushNamed(context, AppRoutes.createPackage);
+                if (awaitingVerification) {
+                  showCustomToast(
+                      message: "Please wait for verification to continue");
+                } else if (activeUser.value.verified == false) {
+                  showCustomToast(
+                      message: "Complete your profile to be verified");
+                  Navigator.pushNamed(context, AppRoutes.editProfile);
+                } else {
+                  Navigator.pushNamed(context, AppRoutes.createPackage);
+                }
               },
               child: Column(
                 children: <Widget>[

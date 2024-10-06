@@ -8,11 +8,13 @@ class InputFieldWidget extends StatelessWidget {
   final String type;
   final Function(String?)? onSaved;
   final String? init;
+  final bool? readOnly;
   const InputFieldWidget({
     super.key,
     this.title,
     this.onSaved,
     this.init,
+    this.readOnly,
     this.required = false,
     required this.hint,
     required this.type,
@@ -59,6 +61,7 @@ class InputFieldWidget extends StatelessWidget {
               onSaved: onSaved,
               obscureText: password ? visible : false,
               initialValue: init ?? "",
+              readOnly: readOnly ?? false,
               textCapitalization: getTextCapitalization(type),
               decoration: InputDecoration(
                 filled: true,

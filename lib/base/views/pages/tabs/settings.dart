@@ -44,11 +44,19 @@ class SettingsPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(10),
+                      image: activeUser.value.image != null
+                          ? DecorationImage(
+                              image: NetworkImage(activeUser.value.image!),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
                     ),
-                    child: const Icon(
-                      Icons.person,
-                      size: 30,
-                    ),
+                    child: activeUser.value.image != null
+                        ? const SizedBox()
+                        : const Icon(
+                            Icons.person,
+                            size: 30,
+                          ),
                   ),
                   SizedBox(width: context.width * 0.02),
                   Column(
@@ -63,10 +71,11 @@ class SettingsPage extends StatelessWidget {
                             weight: FontWeight.w600,
                           ),
                           Visibility(
-                            visible: activeUser.value.verificationBack !=
-                                    null &&
-                                activeUser.value.verificationFront != null &&
-                                activeUser.value.verified != false,
+                            visible:
+                                (activeUser.value.verificationBack != null ||
+                                        activeUser.value.verificationFront !=
+                                            null) &&
+                                    activeUser.value.verified == false,
                             child: Container(
                               margin: const EdgeInsets.only(left: 5, top: 2),
                               padding: const EdgeInsets.symmetric(
@@ -112,21 +121,21 @@ class SettingsPage extends StatelessWidget {
                 title: "My Packages",
                 image: AppStrings.boxIcon,
                 onTap: () {
-                Navigator.pushNamed(context, AppRoutes.myPackages);
+                  Navigator.pushNamed(context, AppRoutes.myPackages);
                 },
               ),
               SettingsItem(
                 title: "Order History",
                 image: AppStrings.receiptIcon,
                 onTap: () {
-                  showCustomToast(message: "Coming soon");
+                  Navigator.pushNamed(context, AppRoutes.myOrders);
                 },
               ),
               SettingsItem(
                 title: "FAQs",
                 image: AppStrings.faqIcon,
                 onTap: () {
-                  showCustomToast(message: "Coming soon");
+                  Navigator.pushNamed(context, AppRoutes.faqs);
                 },
               ),
               SettingsItem(
@@ -143,61 +152,21 @@ class SettingsPage extends StatelessWidget {
                   showCustomToast(message: "Coming soon");
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 9),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: context.primaryColor.withOpacity(.07),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.logout_outlined,
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                    SizedBox(width: context.width * 0.03),
-                    const TextVariation(
-                      text: "Logout",
-                      size: 16,
-                      weight: FontWeight.w600,
-                    ),
-                    const Spacer(),
-                    Visibility(
-                      visible: true,
-                      replacement: CupertinoActivityIndicator(
-                        color: context.primaryColor,
-                        radius: 10,
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey[300]!),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 12,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
               BlocListener<AuthBloc, AuthState>(
                 listener: (context, state) {
-                  // TODO: implement listener
+                  if (state is AuthError) {
+                    showCustomToast(message: state.message, type: "err");
+                  } else if (state is LogoutSuccess) {
+                    showCustomToast(
+                        message: "Logged out successfully", type: "suc");
+                    context.read<NavigatorCubit>().setIndex(0);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, AppRoutes.login, (route) => false);
+                  }
                 },
                 child: BlocBuilder<AuthBloc, AuthState>(
                   builder: (context, state) {
-                    return SettingsItem(
-                      title: "Delete Account",
-                      loading: state is AuthLoading,
-                      image: AppStrings.deleteIcon,
-                      color: Colors.red,
+                    return InkWell(
                       onTap: () {
                         showCustomDialog(
                           context: context,
@@ -210,6 +179,93 @@ class SettingsPage extends StatelessWidget {
                             yesOnPressed: () {
                               Navigator.pop(context);
                               context.read<AuthBloc>().add(Logout());
+                            },
+                            noOnPressed: () {
+                              Navigator.pop(context);
+                            },
+                            type: "warning",
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 9),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: context.primaryColor.withOpacity(.07),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.logout_outlined,
+                                color: Colors.redAccent,
+                              ),
+                            ),
+                            SizedBox(width: context.width * 0.03),
+                            const TextVariation(
+                              text: "Logout",
+                              size: 16,
+                              weight: FontWeight.w600,
+                            ),
+                            const Spacer(),
+                            Visibility(
+                              visible: true,
+                              replacement: CupertinoActivityIndicator(
+                                color: context.primaryColor,
+                                radius: 10,
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey[300]!),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthError) {
+                    showCustomToast(message: state.message, type: "err");
+                  } else if (state is DeleteAccountSuccess) {
+                    context.read<NavigatorCubit>().setIndex(0);
+                    showCustomToast(
+                        message: "Account deleted successfully", type: "suc");
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, AppRoutes.login, (route) => false);
+                  }
+                },
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return SettingsItem(
+                      title: "Delete Account",
+                      loading: state is AuthLoading,
+                      image: AppStrings.deleteIcon,
+                      color: Colors.red,
+                      onTap: () {
+                        showCustomDialog(
+                          context: context,
+                          data: DialogData(
+                            title: "Confirm Deletion",
+                            description:
+                                "Are you sure you want to delete your account? This action cannot be undone.",
+                            noText: "Cancel",
+                            yesText: "Delete",
+                            yesOnPressed: () {
+                              Navigator.pop(context);
+                              context.read<AuthBloc>().add(DeleteUserAccount());
                             },
                             noOnPressed: () {
                               Navigator.pop(context);

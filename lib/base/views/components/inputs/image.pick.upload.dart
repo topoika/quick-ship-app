@@ -107,9 +107,9 @@ void showPickOptionsDialog(BuildContext context, cam, gal, {profile = true}) {
 cropImage(File picked, context, onsaved, type) async {
   final cropped = await ImageCropper().cropImage(
     sourcePath: picked.path,
-    aspectRatio: const CropAspectRatio(
+    aspectRatio: CropAspectRatio(
       ratioX: 400,
-      ratioY: 400,
+      ratioY: getAspectY(type),
     ),
     uiSettings: [
       AndroidUiSettings(
@@ -127,6 +127,17 @@ cropImage(File picked, context, onsaved, type) async {
   );
   if (cropped != null) {
     onsaved(cropped.path);
+  }
+}
+
+double getAspectY(type) {
+  switch (type) {
+    case "profile":
+      return 400;
+    case "document":
+      return 300;
+    default:
+      return 25;
   }
 }
 
@@ -176,15 +187,6 @@ Future<List<File>> loadImages(context) async {
   }
   Navigator.pop(context);
   return files;
-}
-
-double getAspectY(type) {
-  switch (type) {
-    case "profile":
-      return 25;
-    default:
-      return 25;
-  }
 }
 
 showLargeImage(context, img, fl) => showDialog<void>(

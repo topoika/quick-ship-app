@@ -150,9 +150,7 @@ class PackageImage {
     return PackageImage(
       id: map['id'] != null ? map['id'] as int : null,
       packageId: map['packageId'] != null ? map['packageId'] as int : null,
-      url: map['url'] != null
-          ? "http://15.237.218.2:9000/uploads/media/${map['url']}"
-          : null,
+      url: map['url'] != null ? mediaUrl + map['url'] : null,
     );
   }
 }

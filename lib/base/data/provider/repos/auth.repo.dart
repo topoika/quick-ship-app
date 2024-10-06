@@ -80,6 +80,7 @@ class AuthRepo extends NetworkRequest {
         Storage.saveData("authToken", response['auth_token']);
         return response['otp'];
       } else {
+        log(response.toString());
         throw CustomError(response['message']);
       }
     } catch (e) {
@@ -89,13 +90,21 @@ class AuthRepo extends NetworkRequest {
 
   // deleteUser
   Future<void> deleteUser() async {
-    await delete("user/delete");
-    // await auth.signOut();
-    // await googleSignIn.signOut();
-    // await fcm.unsubscribeFromTopic("user_${activeUser.value.id}");
-    activeUser.value = User();
-    Storage.deleteData("authToken");
-    return;
+    try {
+      final response = await delete("user/delete-account");
+      if (response['success'] == true) {
+        // await auth.signOut();
+        // await googleSignIn.signOut();
+        // await fcm.unsubscribeFromTopic("user_${activeUser.value.id}");
+        activeUser.value = User();
+        Storage.deleteData("authToken");
+        return;
+      } else {
+        throw CustomError(response['message']);
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   // logout

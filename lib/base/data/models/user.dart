@@ -16,7 +16,11 @@ class User {
   bool? signInMethodVerified;
   bool? isBlocked;
   String? createdAt;
-  String? imageUrl;
+  String? image;
+
+  int? reviewCount;
+  double? averageRating;
+
   User({
     this.id,
     this.name,
@@ -33,7 +37,9 @@ class User {
     this.signInMethodVerified,
     this.isBlocked,
     this.createdAt,
-    this.imageUrl,
+    this.image,
+    this.reviewCount,
+    this.averageRating,
   });
 
   Map<String, dynamic> toMap() {
@@ -56,6 +62,16 @@ class User {
     };
   }
 
+  // toUpdateMap
+  Map<String, dynamic> toUpdateMap() {
+    return <String, dynamic>{
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'idNumber': idNumber,
+    };
+  }
+
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'] != null ? map['id'] as int : null,
@@ -63,15 +79,16 @@ class User {
       email: map['email'] != null ? map['email'] as String : null,
       password: map['password'] != null ? map['password'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
+      image: map['image'] != null ? mediaUrl + map['image'] : null,
       idNumber: map['idNumber'] != null ? map['idNumber'] as String : null,
       succesScore:
           map['succesScore'] != null ? map['succesScore'] as double : null,
       role: map['role'] != null ? map['role'] as String : null,
       verificationFront: map['verificationFront'] != null
-          ? map['verificationFront'] as String
+          ? mediaUrl + map['verificationFront']
           : null,
       verificationBack: map['verificationBack'] != null
-          ? map['verificationBack'] as String
+          ? mediaUrl + map['verificationBack']
           : null,
       signInMethod:
           map['signInMethod'] != null ? map['signInMethod'] as String : null,
@@ -81,6 +98,52 @@ class User {
           : null,
       isBlocked: map['isBlocked'] != null ? map['isBlocked'] as bool : null,
       createdAt: map['createdAt'] != null ? map['createdAt'] as String : null,
+      reviewCount:
+          map['reviewCount'] != null ? map['reviewCount'] as int : null,
+      averageRating: map['averageRating'] != null
+          ? double.parse(map['averageRating'].toString())
+          : 0.0,
+    );
+  }
+}
+
+class UserWallet {
+  int? id;
+  double? availableForWithdrawal;
+  double? earningsForMonth;
+  double? successScore;
+  double? earningsAllTime;
+  int? completedOrders;
+  int? activeOrders;
+  UserWallet({
+    this.id,
+    this.availableForWithdrawal,
+    this.earningsForMonth,
+    this.successScore,
+    this.earningsAllTime,
+    this.completedOrders,
+    this.activeOrders,
+  });
+
+  factory UserWallet.fromMap(Map<String, dynamic> map) {
+    return UserWallet(
+      id: map['id'] != null ? map['id'] as int : null,
+      availableForWithdrawal: map['availableForWithdrawal'] != null
+          ? double.parse(map['availableForWithdrawal'].toString())
+          : null,
+      earningsForMonth: map['earningsForMonth'] != null
+          ? double.parse(map['earningsForMonth'].toString())
+          : null,
+      successScore: map['successScore'] != null
+          ? double.parse(map['successScore'].toString())
+          : null,
+      earningsAllTime: map['earningsAllTime'] != null
+          ? double.parse(map['earningsAllTime'].toString())
+          : null,
+      completedOrders:
+          map['completedOrders'] != null ? map['completedOrders'] as int : null,
+      activeOrders:
+          map['activeOrders'] != null ? map['activeOrders'] as int : null,
     );
   }
 }

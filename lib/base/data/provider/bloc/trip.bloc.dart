@@ -30,11 +30,31 @@ class TripBloc extends Bloc<TripEvents, TripStates> {
       emit(TripError(message: e.toString()));
     }
   }
+
   void deleteTrip(event, emit) async {
     emit(TripsLoading());
     try {
       await repo.deleteTrip(id: event.id);
       emit(TripDeleted());
+    } catch (e) {
+      emit(TripError(message: e.toString()));
+    }
+  }
+}
+
+// route trips bloc
+class RouteTripsBloc extends Bloc<TripEvents, TripStates> {
+  TripRepo repo = TripRepo();
+  RouteTripsBloc() : super(TripInitial()) {
+    on<FetchRouteTripsEvent>(fetchRouteTrips);
+  }
+
+  void fetchRouteTrips(event, emit) async {
+    emit(TripsLoading());
+    try {
+      final trips = await repo.getRouteTrips(
+          destination: event.destination, departure: event.departure);
+      emit(TripsLoaded(trips: trips));
     } catch (e) {
       emit(TripError(message: e.toString()));
     }

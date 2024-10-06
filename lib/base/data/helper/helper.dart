@@ -44,9 +44,9 @@ String getAddressName(Address address) {
   }
 
   if (address.city != null) {
-    name += " - ${capitalize(address.city) ?? "N/A"}";
+    name += " - ${capitalize(address.city) ?? capitalize(address.state)}";
   }
-  return name;
+  return name.replaceAll("County", "");
 }
 
 Future<Address?> pickLocation(
@@ -87,7 +87,6 @@ Future<Address?> pickLocation(
     }
     return null;
   } catch (e) {
-    log("Error picking location: $e");
     return null;
   }
 }
@@ -134,4 +133,41 @@ Future<DateTime?> pickTime(BuildContext context) async {
   }
 
   return null;
+}
+
+class Coordinate {
+  final double latitude;
+  final double longitude;
+
+  Coordinate({required this.latitude, required this.longitude});
+}
+
+Future<double?> calculateDistanceToPoint(Coordinate point) async {
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+
+  return calculateDistance(
+    Coordinate(latitude: position.latitude, longitude: position.longitude),
+    point,
+  );
+}
+
+double calculateDistance(Coordinate poinT1, Coordinate point2) {
+  const earthRadiusKm = 6371;
+
+  final lat1 = poinT1.latitude * pi / 180;
+  final lon1 = poinT1.longitude * pi / 180;
+  final lat2 = point2.latitude * pi / 180;
+  final lon2 = point2.longitude * pi / 180;
+
+  final dLat = lat2 - lat1;
+  final dLon = lon2 - lon1;
+
+  final a = sin(dLat / 2) * sin(dLat / 2) +
+      cos(lat1) * cos(lat2) * sin(dLon / 2) * sin(dLon / 2);
+  final c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+  final distance = earthRadiusKm * c;
+
+  return distance;
 }

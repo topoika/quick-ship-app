@@ -5,7 +5,7 @@ class TripDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int id = context.watch<DetailsItemCubit>().state.id ?? 0;
+    int id = context.watch<DetailsItemCubit>().state.tripId ?? 0;
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 72,
@@ -88,6 +88,8 @@ class TripDetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool mine = trip.postman!.id == activeUser.value.id;
+    int packageId = context.watch<DetailsItemCubit>().state.packageId!;
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: context.horPad, vertical: 20),
@@ -103,8 +105,14 @@ class TripDetailsBody extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.grey[200],
+                      image: DecorationImage(
+                        image: NetworkImage(trip.postman!.image ?? ""),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    child: const Icon(Icons.person, size: 30),
+                    child: trip.postman!.image != null
+                        ? const SizedBox()
+                        : const Icon(Icons.person, size: 30),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -132,16 +140,18 @@ class TripDetailsBody extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.star, color: context.primaryColor, size: 18),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 4),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: TextVariation(
-                          text: "5.0",
+                          text:
+                              trip.postman?.averageRating?.toStringAsFixed(1) ??
+                                  "0.0",
                           size: 12,
                           weight: FontWeight.w600,
                         ),
                       ),
-                      const TextVariation(
-                        text: "(116 Reviews)",
+                      TextVariation(
+                        text: "(${trip.postman?.reviewCount} Reviews)",
                         size: 12,
                         color: Colors.grey,
                         weight: FontWeight.w500,
@@ -211,8 +221,7 @@ class TripDetailsBody extends StatelessWidget {
                   ),
                   detailsItem(
                     txt: "Departure City",
-                    value:
-                        "${trip.departure!.city ?? ""} ${trip.departure!.country ?? ""}",
+                    value: "${trip.departure!.city ?? trip.departure!.state}",
                   ),
                   detailsItem(
                     txt: "Meeting Point",
@@ -240,9 +249,32 @@ class TripDetailsBody extends StatelessWidget {
                 children: <Widget>[
                   Visibility(
                     visible: !mine,
-                    child: detailsItem(
-                      txt: "Distance from Departure",
-                      value: "2 KM",
+                    child: FutureBuilder(
+                      future: calculateDistanceToPoint(
+                        Coordinate(
+                          latitude: trip.departure!.latitude!,
+                          longitude: trip.departure!.longitude!,
+                        ),
+                      ),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return detailsItem(
+                            txt: "Distance from Departure",
+                            value: "...",
+                          );
+                        } else if (snapshot.hasError) {
+                          return detailsItem(
+                            txt: "Distance from Departure",
+                            value: "⚠",
+                          );
+                        } else {
+                          return detailsItem(
+                            txt: "Distance from Departure",
+                            value: "${snapshot.data!.toStringAsFixed(2)} KM",
+                          );
+                        }
+                      },
                     ),
                   ),
                   detailsItem(
@@ -262,7 +294,7 @@ class TripDetailsBody extends StatelessWidget {
                   detailsItem(
                     txt: "Destination City",
                     value:
-                        "${trip.destination!.city ?? ""} ${trip.destination!.country ?? ""}",
+                        "${trip.destination!.city ?? trip.destination!.state} ",
                   ),
                   detailsItem(
                     txt: "Meeting Point",
@@ -339,9 +371,34 @@ class TripDetailsBody extends StatelessWidget {
                   ),
                   const SizedBox(width: 15),
                   Expanded(
-                    child: PrimaryButton(
-                      text: "Send Request",
-                      onPressed: () {},
+                    child:
+                        BlocListener<PackageRequestBloc, PackageRequestStates>(
+                      listener: (context, state) {
+                        if (state is PackageRequestErrorState) {
+                          showCustomToast(message: state.message, type: "err");
+                        } else if (state is PackageRequestCreatedState) {
+                          showCustomToast(
+                              message: "Request Sent Successfully",
+                              type: "suc");
+                        }
+                      },
+                      child:
+                          BlocBuilder<PackageRequestBloc, PackageRequestStates>(
+                        builder: (context, state) {
+                          return PrimaryButton(
+                            loading: state is PackageRequestLoadingState,
+                            text: "Send Request",
+                            onPressed: () {
+                              context.read<PackageRequestBloc>().add(
+                                    CreatePackageRequestEvent(
+                                      packageId: packageId,
+                                      tripId: trip.id!,
+                                    ),
+                                  );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],

@@ -11,7 +11,7 @@ class ShipmentItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      margin: const EdgeInsets.symmetric(vertical: 9),
+      margin: const EdgeInsets.only(bottom: 9),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: Colors.grey[200],

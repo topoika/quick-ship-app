@@ -113,6 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     if (state is AuthError) {
                       showCustomToast(message: state.message, type: "err");
                     } else if (state is EmailVerificationSent) {
+                      getUserData(context: context);
                       showCustomToast(
                           message: "User registered successfully", type: 'suc');
                       context
@@ -128,6 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         text: "Register",
                         loading: state is AuthLoading,
                         onPressed: () {
+                          registerFormKey.currentState!.save();
                           if (registerFormKey.currentState!.validate()) {
                             registerFormKey.currentState!.save();
                             context

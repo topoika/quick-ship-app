@@ -11,7 +11,7 @@ class TripItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<DetailsItemCubit>().setId(trip.id!);
+        context.read<DetailsItemCubit>().setTripId(trip.id!);
         context
             .read<TripDetailsBloc>()
             .add(FetchTripDetailsEvent(id: trip.id!));
@@ -80,6 +80,7 @@ Widget statusTag({required String status}) {
 
 Widget bottomPart(Trip trip) {
   return Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Expanded(
         child: Column(

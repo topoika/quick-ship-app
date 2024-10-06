@@ -31,6 +31,34 @@ class TripRepo extends NetworkRequest {
     }
   }
 
+  // get user trips
+  Future<List<Trip>> getRouteTrips(
+      {required Address destination, required Address departure}) async {
+    Map<String, dynamic> body = {
+      "destination": {
+        "latitude": destination.latitude,
+        "longitude": destination.longitude,
+        "name": destination.nameAddress
+      },
+      "departure": {
+        "latitude": departure.latitude,
+        "longitude": departure.longitude,
+        "name": departure.nameAddress
+      }
+    };
+    try {
+      final response = await post("trips/route-trips", body);
+      if (response['status'] == false) {
+        throw CustomError(response['message']);
+      } else {
+        List<dynamic> data = response['data'];
+        return List<Trip>.from(data.map((trip) => Trip.fromMap(trip)));
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // get trip details
   Future<Trip> getTripDetails({required int id}) async {
     try {

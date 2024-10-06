@@ -1,4 +1,4 @@
-part of "../pages.dart";
+part of "../../pages.dart";
 
 class MyPackages extends StatelessWidget {
   const MyPackages({super.key});

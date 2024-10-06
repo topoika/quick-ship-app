@@ -13,11 +13,7 @@ class PackageBloc extends Bloc<PackageEvents, PackageStates> {
     try {
       final package = await repo.createPackage(
           package: event.package, images: event.images);
-      if (package != null) {
-        emit(PackageCreated(package: package));
-      } else {
-        emit(PackageError(message: "Error creating package"));
-      }
+      emit(PackageCreated(package: package));
     } catch (e) {
       emit(PackageError(message: e.toString()));
     }
@@ -38,11 +34,7 @@ class PackageBloc extends Bloc<PackageEvents, PackageStates> {
     try {
       final package = await repo.updatePackage(
           package: event.package, images: event.images);
-      if (package != null) {
-        emit(PackageUpdated(package: package));
-      } else {
-        emit(PackageError(message: "Error updating package"));
-      }
+      emit(PackageUpdated(package: package));
     } catch (e) {
       emit(PackageError(message: e.toString()));
     }

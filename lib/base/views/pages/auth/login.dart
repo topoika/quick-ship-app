@@ -62,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (state is AuthError) {
                       showCustomToast(message: state.message, type: "err");
                     } else if (state is LoginSuccess) {
+                      getUserData(context: context);
                       showCustomToast(
                           message: "User login successfully", type: 'suc');
                       Navigator.pushNamedAndRemoveUntil(

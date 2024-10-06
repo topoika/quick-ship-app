@@ -136,7 +136,6 @@ class AuthBloc extends Bloc<AuthEvents, AuthState> {
   }
 
   void logout(event, emit) async {
-    emit(AuthLoading());
     try {
       await repo.logout();
       emit(LogoutSuccess());

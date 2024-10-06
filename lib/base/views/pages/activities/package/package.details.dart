@@ -6,7 +6,7 @@ class PackageDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int id = context.watch<DetailsItemCubit>().state.id ?? 0;
+    int id = context.watch<DetailsItemCubit>().state.packageId ?? 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -423,7 +423,10 @@ class PackageDetailsWidget extends StatelessWidget {
                             child: PrimaryButtonUnfilled(
                               text: "Requests",
                               onPressed: () {
-                                // TODO: Navigate to requests screen
+                                context.read<PackageRequestBloc>().add(
+                                    FetchPackageRequestsEvent(id: package.id!));
+                                Navigator.pushNamed(
+                                    context, AppRoutes.packageRequest);
                               },
                             ),
                           ),
@@ -432,7 +435,16 @@ class PackageDetailsWidget extends StatelessWidget {
                             child: PrimaryButton(
                               text: "Find Postman",
                               onPressed: () {
-                                // TODO: Navigate to find postman screen
+                                context.read<RouteTripsBloc>().add(
+                                    FetchRouteTripsEvent(
+                                        departure: package.sourceAddress!,
+                                        destination:
+                                            package.destinationAddress!));
+                                context
+                                    .read<DetailsItemCubit>()
+                                    .setAddreses(package);
+                                Navigator.pushNamed(
+                                    context, AppRoutes.routeTripsPage);
                               },
                             ),
                           ),
@@ -538,7 +550,7 @@ class PackageLoadingWidget extends StatelessWidget {
         children: <Widget>[
           shimmerContainer(
             context,
-            context.width * 0.7,
+            context.width * 0.85,
             context.width,
             0,
           ),

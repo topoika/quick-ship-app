@@ -40,13 +40,11 @@ String? validator(String? value, String type) {
       error = value!.length < 4 ? "Enter a valid item name" : null;
       break;
     case "license":
-      error = value!.length < 4 ? "Enter valid Licence Plate" : null;
       break;
     case "description":
       error = value!.isEmpty ? "Enter something" : null;
       break;
     case "vehicle":
-      error = value!.isEmpty ? "Enter a valid vehicle Identiy" : null;
       break;
     default:
       return 'Invalid type';

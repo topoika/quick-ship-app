@@ -2,7 +2,7 @@ part of "../export.provider.dart";
 
 class PackageRepo extends NetworkRequest {
   // create package
-  Future<Package?> createPackage(
+  Future<Package> createPackage(
       {required Package package, required List<File> images}) async {
     try {
       var requestQuerry =
@@ -22,14 +22,12 @@ class PackageRepo extends NetworkRequest {
       });
       var response = await requestQuerry.send();
       if (response.statusCode == 201) {
-        response.stream.bytesToString().then((val) {
+        return response.stream.bytesToString().then((val) {
           final Map<String, dynamic> data = json.decode(val);
-          return Package.fromMap(data['package']);
+          return Package.fromMap(data['data']);
         });
-        return package;
       } else {
-        response.stream.bytesToString().then((val) {
-          log(val);
+        return response.stream.bytesToString().then((val) {
           var message = json.decode(val)["message"];
           throw CustomError(message);
         });
@@ -37,11 +35,10 @@ class PackageRepo extends NetworkRequest {
     } catch (e) {
       throw CustomError(e.toString());
     }
-    return null;
   }
 
   // update package
-  Future<Package?> updatePackage(
+  Future<Package> updatePackage(
       {required Package package, required List<File> images}) async {
     try {
       var requestQuerry = http.MultipartRequest(
@@ -61,13 +58,12 @@ class PackageRepo extends NetworkRequest {
       });
       var response = await requestQuerry.send();
       if (response.statusCode == 200) {
-        response.stream.bytesToString().then((val) {
+        return response.stream.bytesToString().then((val) {
           final Map<String, dynamic> data = json.decode(val);
           return Package.fromMap(data['package']);
         });
-        return package;
       } else {
-        response.stream.bytesToString().then((val) {
+        return response.stream.bytesToString().then((val) {
           log(val);
           var message = json.decode(val)["message"];
           throw CustomError(message);
@@ -76,7 +72,6 @@ class PackageRepo extends NetworkRequest {
     } catch (e) {
       throw CustomError(e.toString());
     }
-    return null;
   }
 
   // get user packages

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of "../pages.dart";
 
 class EditProfile extends StatefulWidget {
@@ -8,7 +9,6 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  // form key
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   File? image;
   File? verificationFront;
@@ -17,9 +17,32 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 72,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Container(
+            margin:
+                EdgeInsets.symmetric(horizontal: context.horPad, vertical: 7),
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: Colors.grey[300]!,
+              ),
+            ),
+            height: 10,
+            width: 10,
+            child: const Icon(
+              Icons.arrow_back_ios_rounded,
+              color: Colors.black,
+            ),
+          ),
+        ),
         title: const TextVariation(
           text: "Update Profile",
-          size: 18,
+          size: 15,
           weight: FontWeight.w600,
         ),
       ),
@@ -46,21 +69,22 @@ class _EditProfileState extends State<EditProfile> {
                           height: context.width * .32,
                           width: context.width * .32,
                           decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              shape: BoxShape.circle,
-                              image: image != null
-                                  ? DecorationImage(
-                                      image: FileImage(image!),
-                                      fit: BoxFit.cover,
-                                    )
-                                  // : activeUser.value.imageUrl != null
-                                  //     ? DecorationImage(
-                                  //         image: NetworkImage(
-                                  //             "${activeUser.value.imageUrl}"),
-                                  //         fit: BoxFit.cover,
-                                  //       )
-                                  : null),
-                          child: image != null
+                            color: Colors.grey[200],
+                            shape: BoxShape.circle,
+                            image: image != null
+                                ? DecorationImage(
+                                    image: FileImage(image!),
+                                    fit: BoxFit.cover,
+                                  )
+                                : activeUser.value.image != null
+                                    ? DecorationImage(
+                                        image: NetworkImage(
+                                            "${activeUser.value.image}"),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null,
+                          ),
+                          child: image != null || activeUser.value.image != null
                               ? const SizedBox()
                               : const Icon(
                                   Icons.person,
@@ -126,6 +150,7 @@ class _EditProfileState extends State<EditProfile> {
                   title: "Email",
                   required: true,
                   init: activeUser.value.email,
+                  readOnly: true,
                   onSaved: (val) => activeUser.value.email = val,
                 ),
                 PhoneInputField(
@@ -138,6 +163,7 @@ class _EditProfileState extends State<EditProfile> {
                   title: "ID Number",
                   hint: "ID/Passport Number",
                   type: "id_number",
+                  readOnly: activeUser.value.verified,
                   required: true,
                   init: activeUser.value.idNumber,
                   onSaved: (val) => activeUser.value.idNumber = val,
@@ -152,119 +178,162 @@ class _EditProfileState extends State<EditProfile> {
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                        child: GestureDetector(
-                          child: Container(
-                            height: context.height * 0.13,
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.grey.withOpacity(.2),
-                                image: verificationFront != null
-                                    ? DecorationImage(
-                                        image: FileImage(verificationFront!),
-                                        fit: BoxFit.cover,
-                                      )
-                                    : activeUser.value.verificationFront != null
-                                        ? DecorationImage(
-                                            image: NetworkImage(activeUser
-                                                    .value.verificationFront ??
-                                                ""),
-                                            fit: BoxFit.fill,
-                                          )
-                                        : null),
-                            child: verificationFront != null ||
-                                    activeUser.value.verificationFront != null
-                                ? const SizedBox()
-                                : Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Icon(Icons.upload,
-                                          color: context.primaryColor),
-                                      const SizedBox(height: 15),
-                                      TextVariation(
-                                        text: "Upload Verification Front",
-                                        size: 12,
-                                        align: TextAlign.center,
-                                        weight: FontWeight.w500,
-                                        color: context.primaryColor,
-                                      ),
-                                    ],
-                                  ),
-                          ),
+                        child: DocItemWidget(
+                          text: "Upload Verification Front",
+                          url: activeUser.value.verificationFront,
+                          image: verificationFront,
+                          onTap: () {
+                            showPickOptionsDialog(
+                              context,
+                              () => takeCroppedPicture(
+                                context,
+                                "document",
+                                (val) => setState(
+                                    () => verificationFront = File(val)),
+                              ),
+                              () => loadCroppedPicture(
+                                context,
+                                "document",
+                                (val) => setState(
+                                    () => verificationFront = File(val)),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(width: 15),
                       Expanded(
-                        child: GestureDetector(
-                          child: Container(
-                            height: context.height * 0.13,
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.grey.withOpacity(.2),
-                                image: verificationBack != null
-                                    ? DecorationImage(
-                                        image: FileImage(verificationBack!),
-                                        fit: BoxFit.cover,
-                                      )
-                                    : activeUser.value.verificationBack != null
-                                        ? DecorationImage(
-                                            image: NetworkImage(activeUser
-                                                    .value.verificationBack ??
-                                                ""),
-                                            fit: BoxFit.fill,
-                                          )
-                                        : null),
-                            child: verificationBack != null ||
-                                    activeUser.value.verificationBack != null
-                                ? const SizedBox()
-                                : Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Icon(Icons.upload,
-                                          color: context.primaryColor),
-                                      const SizedBox(height: 15),
-                                      TextVariation(
-                                        text: "Upload Verification Back",
-                                        size: 12,
-                                        weight: FontWeight.w500,
-                                        align: TextAlign.center,
-                                        color: context.primaryColor,
-                                      ),
-                                    ],
-                                  ),
-                          ),
+                        child: DocItemWidget(
+                          text: "Upload Verification Back",
+                          url: activeUser.value.verificationBack,
+                          image: verificationBack,
+                          onTap: () {
+                            showPickOptionsDialog(
+                              context,
+                              () => takeCroppedPicture(
+                                context,
+                                "document",
+                                (val) => setState(
+                                    () => verificationBack = File(val)),
+                              ),
+                              () => loadCroppedPicture(
+                                context,
+                                "document",
+                                (val) => setState(
+                                    () => verificationBack = File(val)),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 10),
-                PrimaryButton(
-                  text: "Update",
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-                      Navigator.pop(context);
-                      // context.read<UserCubit>().updateUser(activeUser.value);
-                    } else {
-                      if (validationErrors.isNotEmpty) {
-                        showCustomToast(
-                          message: validationErrors[0],
-                          type: "err",
-                        );
-                      }
+                BlocListener<UserBloc, UserStates>(
+                  listener: (context, state) {
+                    if (state is UserError) {
+                      showCustomToast(message: state.message, type: "err");
+                    } else if (state is UserUpdateSuccess) {
+                      showCustomToast(
+                          message: "Update Successful, wait for verification",
+                          type: "suc");
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, AppRoutes.tabs, (route) => false);
                     }
                   },
+                  child: BlocBuilder<UserBloc, UserStates>(
+                    builder: (context, state) {
+                      return PrimaryButton(
+                        text: "Update",
+                        loading: state is UserLoading,
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
+                            context.read<UserBloc>().add(UpdateProfile(
+                                  user: activeUser.value,
+                                  image: image,
+                                  verificationFront: verificationFront,
+                                  verificationBack: verificationBack,
+                                ));
+                          } else {
+                            if (validationErrors.isNotEmpty) {
+                              showCustomToast(
+                                message: validationErrors[0],
+                                type: "err",
+                              );
+                            }
+                          }
+                        },
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class DocItemWidget extends StatelessWidget {
+  final String text;
+  final File? image;
+  final Function? onTap;
+  final String? url;
+  const DocItemWidget({
+    super.key,
+    required this.text,
+    this.image,
+    this.onTap,
+    this.url,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (onTap != null) {
+          onTap!();
+        }
+      },
+      child: Container(
+        height: context.height * 0.13,
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.grey.withOpacity(.2),
+            image: image != null
+                ? DecorationImage(
+                    image: FileImage(image!),
+                    fit: BoxFit.cover,
+                  )
+                : url != null
+                    ? DecorationImage(
+                        image: NetworkImage(url ?? ""),
+                        fit: BoxFit.fill,
+                      )
+                    : null),
+        child: image != null || url != null
+            ? const SizedBox()
+            : Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.upload, color: context.primaryColor),
+                  const SizedBox(height: 15),
+                  TextVariation(
+                    text: text,
+                    size: 12,
+                    weight: FontWeight.w500,
+                    align: TextAlign.center,
+                    color: context.primaryColor,
+                  ),
+                ],
+              ),
       ),
     );
   }

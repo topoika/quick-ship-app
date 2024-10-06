@@ -12,7 +12,7 @@ class PackageListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<DetailsItemCubit>().setId(package.id!);
+        context.read<DetailsItemCubit>().setPackageId(package.id!);
         context
             .read<PackageDetailsBloc>()
             .add(GetPackageDetails(id: package.id!));
@@ -147,4 +147,49 @@ Widget packageBottom({required Package package}) {
       ),
     ],
   );
+}
+
+class PackageRequestListItem extends StatelessWidget {
+  final PackageRequest packageRequest;
+  const PackageRequestListItem({
+    super.key,
+    required this.packageRequest,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 9),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(.2),
+            spreadRadius: 2,
+            blurRadius: 3,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const TextVariation(
+                text: "Jacob Juma",
+                size: 13,
+                weight: FontWeight.w600,
+              ),
+              statusTag(status: packageRequest.status ?? "pending"),
+            ],
+          ),
+          const SizedBox(height: 10),
+          const SizedBox(height: 5),
+        ],
+      ),
+    );
+  }
 }

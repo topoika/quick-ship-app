@@ -6,59 +6,67 @@ class TabsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int index = context.watch<NavigatorCubit>().state;
-    return Scaffold(
-      body: buildBody(index),
-      bottomNavigationBar: MediaQuery(
-        data: MediaQuery.of(context)
-            .copyWith(textScaler: const TextScaler.linear(1)),
-        child: BottomNavigationBar(
-          currentIndex: index,
-          type: BottomNavigationBarType.fixed,
-          onTap: (int val) => context.read<NavigatorCubit>().setIndex(val),
-          backgroundColor: Colors.white,
-          elevation: 5,
-          selectedItemColor: context.primaryColor,
-          unselectedItemColor: Colors.grey,
-          selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 13,
+    return PopScope(
+      canPop: index == 0,
+      onPopInvoked: (val) {
+        if (index != 0) {
+          context.read<NavigatorCubit>().setIndex(0);
+        }
+      },
+      child: Scaffold(
+        body: buildBody(index),
+        bottomNavigationBar: MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1)),
+          child: BottomNavigationBar(
+            currentIndex: index,
+            type: BottomNavigationBarType.fixed,
+            onTap: (int val) => context.read<NavigatorCubit>().setIndex(val),
+            backgroundColor: Colors.white,
+            elevation: 5,
+            selectedItemColor: context.primaryColor,
+            unselectedItemColor: Colors.grey,
+            selectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 13,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 13,
+            ),
+            items: [
+              buildBottomNavigationBarItem(
+                context: context,
+                icon: AppStrings.homeIcon,
+                activeIcon: AppStrings.homeActive,
+                label: 'Home',
+              ),
+              buildBottomNavigationBarItem(
+                context: context,
+                icon: AppStrings.tripIcon,
+                activeIcon: AppStrings.tripActive,
+                label: 'Trips',
+              ),
+              buildBottomNavigationBarItem(
+                context: context,
+                icon: AppStrings.shipmentIcon,
+                activeIcon: AppStrings.shipmentActive,
+                label: 'Shipments',
+              ),
+              buildBottomNavigationBarItem(
+                context: context,
+                icon: AppStrings.chatIcon,
+                activeIcon: AppStrings.chatActive,
+                label: 'Chat',
+              ),
+              buildBottomNavigationBarItem(
+                context: context,
+                icon: AppStrings.userIcon,
+                activeIcon: AppStrings.userActive,
+                label: 'Profile',
+              ),
+            ],
           ),
-          unselectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 13,
-          ),
-          items: [
-            buildBottomNavigationBarItem(
-              context: context,
-              icon: AppStrings.homeIcon,
-              activeIcon: AppStrings.homeActive,
-              label: 'Home',
-            ),
-            buildBottomNavigationBarItem(
-              context: context,
-              icon: AppStrings.tripIcon,
-              activeIcon: AppStrings.tripActive,
-              label: 'Trips',
-            ),
-            buildBottomNavigationBarItem(
-              context: context,
-              icon: AppStrings.shipmentIcon,
-              activeIcon: AppStrings.shipmentActive,
-              label: 'Shipments',
-            ),
-            buildBottomNavigationBarItem(
-              context: context,
-              icon: AppStrings.chatIcon,
-              activeIcon: AppStrings.chatActive,
-              label: 'Chat',
-            ),
-            buildBottomNavigationBarItem(
-              context: context,
-              icon: AppStrings.userIcon,
-              activeIcon: AppStrings.userActive,
-              label: 'Profile',
-            ),
-          ],
         ),
       ),
     );

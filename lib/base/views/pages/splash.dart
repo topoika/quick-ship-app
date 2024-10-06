@@ -77,4 +77,5 @@ class SplashScreen extends StatelessWidget {
 void getUserData({required BuildContext context}) {
   context.read<TripBloc>().add(FetchUserTripsEvent());
   context.read<PackageBloc>().add(FetchUserPackages());
+  context.read<UserStatsBloc>().add(FetchUserStats());
 }
