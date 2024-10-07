@@ -36,12 +36,12 @@ class PackageRequestRepo extends NetworkRequest {
   }
 
   // accept package request
-  Future<PackageRequest> acceptPackageRequest({required int id}) async {
+  Future acceptPackageRequest({required int id}) async {
     try {
       final response = await put("request/accept?id=$id", {});
+      log("Response $response");
       if (response['success'] == true) {
-        final packageRequest = PackageRequest.fromMap(response['data']);
-        return packageRequest;
+        return;
       } else {
         throw Exception(response['message']);
       }
@@ -51,12 +51,11 @@ class PackageRequestRepo extends NetworkRequest {
   }
 
   // decline package request
-  Future<PackageRequest> declinePackageRequest({required int id}) async {
+  Future declinePackageRequest({required int id}) async {
     try {
       final response = await put("request/reject?id=$id", {});
       if (response['success'] == true) {
-        final packageRequest = PackageRequest.fromMap(response['data']);
-        return packageRequest;
+        return;
       } else {
         throw Exception(response['message']);
       }

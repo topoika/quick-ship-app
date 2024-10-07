@@ -2,14 +2,14 @@ part of "../data.dart";
 
 class PackageRequest {
   int? id;
-  Package? pakage;
+  Package? package;
   Trip? trip;
   String? status;
   double? postageFee;
   String? createdAt;
   PackageRequest({
     this.id,
-    this.pakage,
+    this.package,
     this.trip,
     this.status,
     this.postageFee,
@@ -19,7 +19,7 @@ class PackageRequest {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'pakage': pakage?.toMap(),
+      'package': package?.toMap(),
       'trip': trip?.toMap(),
       'status': status,
       'postageFee': postageFee,
@@ -30,8 +30,8 @@ class PackageRequest {
   factory PackageRequest.fromMap(Map<String, dynamic> map) {
     return PackageRequest(
       id: map['id'] != null ? map['id'] as int : null,
-      pakage: map['pakage'] != null
-          ? Package.fromMap(map['pakage'] as Map<String, dynamic>)
+      package: map['package'] != null
+          ? Package.fromMap(map['package'] as Map<String, dynamic>)
           : null,
       trip: map['trip'] != null
           ? Trip.fromMap(map['trip'] as Map<String, dynamic>)

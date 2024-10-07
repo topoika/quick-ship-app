@@ -38,6 +38,7 @@ part 'tabs/shipments.dart';
 part 'user/edit.profile.dart';
 part "activities/package/my.packages.dart";
 part "user/my.orders.page.dart";
+part 'user/notifications.dart';
 
 // activities
 part 'activities/package/create.package.dart';
@@ -46,6 +47,8 @@ part 'activities/trip/trip.details.dart';
 part 'activities/trip/available.route.trips.dart';
 part 'activities/package/package.details.dart';
 part "activities/package/package.requests.dart";
+part 'activities/package/request.details.dart';
+part 'activities/trip/order.request.details.dart';
 
 // shipments
 part 'activities/shipment/rate.shipment.dart';

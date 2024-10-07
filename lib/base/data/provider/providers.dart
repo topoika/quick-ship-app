@@ -12,6 +12,12 @@ List<SingleChildWidget> blocProvider({required BuildContext context}) => [
       BlocProvider(create: (context) => PackageDetailsBloc()),
       BlocProvider(create: (context) => PackageRequestBloc()),
       BlocProvider(create: (context) => PackageRequestDetailsBloc()),
+      BlocProvider(create: (context) => NotificationBloc()),
+      BlocProvider(create: (context) => FaqBloc()..add(FetchFaqs())),
+      BlocProvider(create: (context) => FeedBloc()..add(FetchFeeds())),
+      BlocProvider(create: (context) => OrderBloc()),
+      BlocProvider(create: (context) => MyOrderBloc()),
+      BlocProvider(create: (context) => ShipmentsBloc()),
 
       // cubits
       BlocProvider(create: (context) => PasswordCubit()),

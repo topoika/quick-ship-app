@@ -63,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                       showCustomToast(message: state.message, type: "err");
                     } else if (state is LoginSuccess) {
                       getUserData(context: context);
+                      context.read<NavigatorCubit>().setIndex(0);
                       showCustomToast(
                           message: "User login successfully", type: 'suc');
                       Navigator.pushNamedAndRemoveUntil(

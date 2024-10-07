@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of "../components.dart";
 
 void showCustomDialog(
@@ -13,6 +14,14 @@ void showCustomDialog(
       noOnPressed: () => data.noOnPressed!(),
       type: data.type!,
     ),
+  );
+}
+
+void showMpesaNumberDialog(
+    {required BuildContext context, required Function(String) onsubmit}) {
+  showDialog(
+    context: context,
+    builder: (context) => MpesaDialog(onsubmit: onsubmit),
   );
 }
 
@@ -168,6 +177,103 @@ class CustomDialog extends StatelessWidget {
               ],
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+GlobalKey<FormState> mpesaFormKey = GlobalKey<FormState>();
+
+class MpesaDialog extends StatelessWidget {
+  final Function(String) onsubmit;
+  const MpesaDialog({
+    super.key,
+    required this.onsubmit,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String number = "";
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      insetPadding: EdgeInsets.zero,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              spreadRadius: 0.5,
+              blurRadius: 5,
+              offset: const Offset(0, 1),
+            ),
+          ],
+          color: Colors.white,
+        ),
+        child: Form(
+          key: mpesaFormKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const TextVariation(
+                text: "Payment MPesa Number",
+                weight: FontWeight.w600,
+                size: 15,
+              ),
+              const TextVariation(
+                text: "Enter mpesa number to recieve prompt for this payment",
+                weight: FontWeight.w500,
+                size: 12,
+                opacity: .7,
+              ),
+              const SizedBox(height: 10),
+              NewItemInputField(
+                hint: "Mpesa Number",
+                type: "mpesa_number",
+                init: activeUser.value.phone?.replaceAll("+254", "0"),
+                onSaved: (value) => number = value!,
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: PrimaryButtonUnfilled(
+                      text: "Cancel",
+                      color: Colors.red,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: PrimaryButton(
+                      text: "Submit",
+                      onPressed: () {
+                        validationErrors.clear();
+                        if (mpesaFormKey.currentState!.validate()) {
+                          mpesaFormKey.currentState!.save();
+                          onsubmit(number.replaceAll(" ", ""));
+                        } else {
+                          if (validationErrors.isNotEmpty) {
+                            showCustomToast(
+                                message: validationErrors[0], type: "err");
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+            ],
+          ),
         ),
       ),
     );

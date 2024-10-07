@@ -201,8 +201,12 @@ Color statusColor(String status) {
       return Colors.blue;
     case "completed":
       return Colors.green;
+    case "active":
+      return Colors.teal;
     case "cancelled":
       return Colors.red;
+    case "postponed":
+      return Colors.redAccent;
     default:
       return Colors.orange;
   }

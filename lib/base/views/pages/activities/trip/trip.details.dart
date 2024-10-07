@@ -90,6 +90,9 @@ class TripDetailsBody extends StatelessWidget {
     bool mine = trip.postman!.id == activeUser.value.id;
     int packageId = context.watch<DetailsItemCubit>().state.packageId!;
 
+    bool tripStarted = trip.departure!.dateAndTime != null &&
+        DateTime.parse(trip.departure!.dateAndTime!).isBefore(DateTime.now());
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: context.horPad, vertical: 20),
@@ -306,61 +309,66 @@ class TripDetailsBody extends StatelessWidget {
             const SizedBox(height: 15),
             Visibility(
               visible: !mine,
-              replacement: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: BlocListener<TripBloc, TripStates>(
-                      listener: (context, state) {
-                        if (state is TripError) {
-                          showCustomToast(message: state.message, type: "err");
-                        } else if (state is TripDeleted) {
-                          showCustomToast(message: "Trip Deleted", type: "suc");
-                          context.read<TripBloc>().add(FetchUserTripsEvent());
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: BlocBuilder<TripBloc, TripStates>(
-                        builder: (context, state) {
-                          return PrimaryButtonUnfilled(
-                            text: "Delete",
-                            loading: state is TripLoading,
-                            onPressed: () {
-                              showCustomDialog(
-                                context: context,
-                                data: DialogData(
-                                  title: "Confirm Delete",
-                                  description:
-                                      "Are you sure you want to delete this trip?",
-                                  noText: "Cancel",
-                                  yesText: "Delete",
-                                  yesOnPressed: () {
-                                    context
-                                        .read<TripBloc>()
-                                        .add(DeleteTripEvent(id: trip.id!));
-                                    Navigator.pop(context);
-                                  },
-                                  noOnPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  type: "warning",
-                                ),
-                              );
+              replacement: tripStarted
+                  ? const SizedBox()
+                  : Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: BlocListener<TripBloc, TripStates>(
+                            listener: (context, state) {
+                              if (state is TripError) {
+                                showCustomToast(
+                                    message: state.message, type: "err");
+                              } else if (state is TripDeleted) {
+                                showCustomToast(
+                                    message: "Trip Deleted", type: "suc");
+                                context
+                                    .read<TripBloc>()
+                                    .add(FetchUserTripsEvent());
+                                Navigator.pop(context);
+                              }
                             },
-                            color: Colors.red[400],
-                          );
-                        },
-                      ),
+                            child: BlocBuilder<TripBloc, TripStates>(
+                              builder: (context, state) {
+                                return PrimaryButtonUnfilled(
+                                  text: "Delete",
+                                  loading: state is TripLoading,
+                                  onPressed: () {
+                                    showCustomDialog(
+                                      context: context,
+                                      data: DialogData(
+                                        title: "Confirm Delete",
+                                        description:
+                                            "Are you sure you want to delete this trip?",
+                                        noText: "Cancel",
+                                        yesText: "Delete",
+                                        yesOnPressed: () {
+                                          context.read<TripBloc>().add(
+                                              DeleteTripEvent(id: trip.id!));
+                                          Navigator.pop(context);
+                                        },
+                                        noOnPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        type: "warning",
+                                      ),
+                                    );
+                                  },
+                                  color: Colors.red[400],
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: PrimaryButton(
+                            text: "Edit Trip",
+                            onPressed: () {},
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: PrimaryButton(
-                      text: "Edit Trip",
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
-              ),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -408,28 +416,6 @@ class TripDetailsBody extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class CustomContainer extends StatelessWidget {
-  final Widget child;
-  const CustomContainer({
-    super.key,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: context.width,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.grey[200],
-      ),
-      child: child,
     );
   }
 }

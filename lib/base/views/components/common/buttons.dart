@@ -167,8 +167,7 @@ class NotificationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // TODO: Implement notification button
-        // Get user notifications
+        Navigator.pushNamed(context, AppRoutes.notifications);
       },
       child: Stack(
         children: [

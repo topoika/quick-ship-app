@@ -34,6 +34,14 @@ class AcceptPackageRequestEvent extends PackageRequestEvents {
   @override
   List<Object> get props => [id];
 }
+class DeletePackageRequest extends PackageRequestEvents {
+  final int id;
+
+  const DeletePackageRequest({required this.id});
+
+  @override
+  List<Object> get props => [id];
+}
 
 class FetchPackageRequestsEvent extends PackageRequestEvents {
   final int id;

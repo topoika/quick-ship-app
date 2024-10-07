@@ -19,22 +19,57 @@ class ShipmentsPage extends StatelessWidget {
           ),
         ],
       ),
-      body:
-
-          // ListView.builder(
-          //   itemCount: 10,
-          //   shrinkWrap: true,
-          //   padding: EdgeInsets.symmetric(horizontal: context.horPad),
-          //   itemBuilder: (context, index) {
-          //     return ShipmentItemWidget(shipment: Shipment());
-          //   },
-          // ),
-
-          Center(
-        child: ErrorNoDataWidget(
-          type: "no-data",
-          message: "No shipments yet",
-          onRetry: () {},
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<ShipmentsBloc>().add(FetchShipments());
+        },
+        child: BlocBuilder<ShipmentsBloc, OrderStates>(
+          builder: (context, state) {
+            if (state is OrderLoading) {
+              return const ListLoadingWidget(itemCount: 10, height: 150);
+            } else if (state is OrdersLoaded) {
+              if (state.orders.isEmpty) {
+                return Center(
+                  child: ErrorNoDataWidget(
+                    type: "no-data",
+                    message: "No shipments yet",
+                    onRetry: () {
+                      context.read<ShipmentsBloc>().add(FetchShipments());
+                    },
+                  ),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: state.orders.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(horizontal: context.horPad),
+                  itemBuilder: (context, index) {
+                    return ShipmentItemWidget(order: state.orders[index]);
+                  },
+                );
+              }
+            } else if (state is OrderError) {
+              return Center(
+                child: ErrorNoDataWidget(
+                  type: "error",
+                  message: state.message,
+                  onRetry: () {
+                    context.read<ShipmentsBloc>().add(FetchShipments());
+                  },
+                ),
+              );
+            } else {
+              return Center(
+                child: ErrorNoDataWidget(
+                  type: "no-data",
+                  message: "No shipments yet",
+                  onRetry: () {
+                    context.read<ShipmentsBloc>().add(FetchShipments());
+                  },
+                ),
+              );
+            }
+          },
         ),
       ),
     );

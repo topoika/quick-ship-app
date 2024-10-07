@@ -14,15 +14,22 @@ String formatToDate({required DateTime date}) {
 }
 
 String tripDateFormat({required String date}) {
-  final DateTime dateTime = DateFormat('yyyy-MM-dd hh:mm a').parse(date);
+  final DateTime dateTime = DateFormat('yyyy-MM-dd hh:mm:').parse(date);
   return DateFormat('MMM d, hh:mm a').format(dateTime);
+}
+
+String formatToTimeAndDate({required DateTime date}) {
+  return DateFormat('MMM d, hh:mm a').format(date);
 }
 
 String formatToTime({required DateTime date}) {
   return DateFormat('hh:mm a').format(date);
 }
 
-DateTime formatToDateAndTime({required String date, required String time}) {
+DateTime? formatToDateAndTime({String? date, String? time}) {
+  if (date == null || time == null) {
+    return null;
+  }
   final DateTime dateTime =
       DateFormat('yyyy-MM-dd hh:mm a').parse('$date $time');
   return dateTime;
@@ -170,4 +177,19 @@ double calculateDistance(Coordinate poinT1, Coordinate point2) {
   final distance = earthRadiusKm * c;
 
   return distance;
+}
+
+String getTimeAgo(DateTime dateTime) {
+  final now = DateTime.now();
+  final difference = now.difference(dateTime);
+
+  if (difference.inDays > 0) {
+    return DateFormat('E, d MMM yyyy').format(dateTime);
+  } else if (difference.inHours > 0) {
+    return DateFormat.jm().format(dateTime);
+  } else if (difference.inMinutes > 0) {
+    return '${difference.inMinutes} Min';
+  } else {
+    return 'Just now';
+  }
 }

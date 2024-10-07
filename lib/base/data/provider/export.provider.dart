@@ -28,6 +28,7 @@ part "bloc/package.bloc.dart";
 part 'bloc/user.bloc.dart';
 part 'bloc/order.bloc.dart';
 part 'bloc/package.request.dart';
+part 'bloc/app.data.bloc.dart';
 
 // events
 part "events/auth.events.dart";
@@ -36,6 +37,7 @@ part "events/package.events.dart";
 part "events/user.events.dart";
 part 'events/order.events.dart';
 part 'events/package.request.events.dart';
+part 'events/app.data.events.dart';
 
 // states
 part "states/auth.states.dart";
@@ -44,6 +46,7 @@ part "states/package.states.dart";
 part "states/user.states.dart";
 part 'states/order.states.dart';
 part 'states/package.request.states.dart';
+part 'states/app.data.states.dart';
 
 // repos
 part "repos/auth.repo.dart";
@@ -52,3 +55,4 @@ part "repos/package.repo.dart";
 part "repos/user.repo.dart";
 part 'repos/order.repo.dart';
 part 'repos/package.request.repo.dart';
+part 'repos/app.data.repo.dart';

@@ -158,37 +158,167 @@ class PackageRequestListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      margin: const EdgeInsets.symmetric(vertical: 9),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(.2),
-            spreadRadius: 2,
-            blurRadius: 3,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              const TextVariation(
-                text: "Jacob Juma",
-                size: 13,
-                weight: FontWeight.w600,
-              ),
-              statusTag(status: packageRequest.status ?? "pending"),
-            ],
-          ),
-          const SizedBox(height: 10),
-          const SizedBox(height: 5),
-        ],
+    return GestureDetector(
+      onTap: () {
+        context.read<DetailsItemCubit>().setRequestId(packageRequest.id!);
+        context
+            .read<PackageRequestDetailsBloc>()
+            .add(FetchPackageRequestDetailsEvent(id: packageRequest.id!));
+        Navigator.pushNamed(context, AppRoutes.requestDetails);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 9),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(.2),
+              spreadRadius: 2,
+              blurRadius: 3,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                TextVariation(
+                  text: "Item#${packageRequest.id}",
+                  size: 13,
+                  weight: FontWeight.w600,
+                ),
+                statusTag(status: packageRequest.status ?? "pending"),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const TextVariation(
+                        text: "Pickup Date",
+                        size: 11,
+                        weight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
+                      TextVariation(
+                        text: tripDateFormat(
+                            date: packageRequest.trip?.departure!.dateAndTime ??
+                                ""),
+                        size: 12,
+                        weight: FontWeight.w600,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      const TextVariation(
+                        text: "Delivery Date",
+                        size: 11,
+                        align: TextAlign.right,
+                        weight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
+                      TextVariation(
+                        text: tripDateFormat(
+                            date: packageRequest.trip?.departure!.dateAndTime ??
+                                ""),
+                        align: TextAlign.right,
+                        size: 12,
+                        weight: FontWeight.w600,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 3),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextVariation(
+                      text: "Postage Fee",
+                      size: 11,
+                      weight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(height: 2),
+                    TextVariation(
+                      text: "Travel Method",
+                      size: 11,
+                      weight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    TextVariation(
+                      text:
+                          formatCurrency(value: packageRequest.postageFee ?? 0),
+                      size: 12,
+                      weight: FontWeight.w600,
+                      align: TextAlign.right,
+                    ),
+                    const SizedBox(height: 2),
+                    TextVariation(
+                      text: packageRequest.trip?.travelMethod?.name ?? "",
+                      size: 12,
+                      weight: FontWeight.w600,
+                      align: TextAlign.right,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Divider(
+                color: Colors.grey.withOpacity(.3), thickness: 1, height: 20),
+            Row(
+              children: [
+                Container(
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[400],
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        packageRequest.trip?.postman?.image ?? "",
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  margin: const EdgeInsets.only(right: 8),
+                  child: packageRequest.trip?.postman?.image == null
+                      ? const Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: 15,
+                        )
+                      : const SizedBox(),
+                ),
+                TextVariation(
+                  text: packageRequest.trip?.postman?.name ?? "",
+                  size: 13,
+                  weight: FontWeight.w600,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

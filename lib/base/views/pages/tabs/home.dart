@@ -10,12 +10,22 @@ void homeSysSettings() {
   );
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
     homeSysSettings();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
@@ -89,26 +99,7 @@ class HomePage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Stack(
-                              children: [
-                                const Icon(
-                                  Icons.notifications,
-                                  color: Colors.white,
-                                ),
-                                Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  child: Container(
-                                    height: 8,
-                                    width: 8,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.red,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            const NotificationButton(color: Colors.white),
                           ],
                         ),
                         SizedBox(height: context.height * 0.025),
@@ -136,22 +127,22 @@ class HomePage extends StatelessWidget {
               const InviteFriendsWidget(),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: context.horPad),
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const TextVariation(
+                    TextVariation(
                       text: "Recent Activities",
                       size: 16,
                       weight: FontWeight.w600,
                     ),
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return ShipmentItemWidget(shipment: Shipment());
-                      },
-                    ),
+                    // ListView.builder(
+                    //   physics: const NeverScrollableScrollPhysics(),
+                    //   shrinkWrap: true,
+                    //   itemCount: 5,
+                    //   itemBuilder: (context, index) {
+                    //     return ShipmentItemWidget(order: Order());
+                    //   },
+                    // ),
                   ],
                 ),
               )

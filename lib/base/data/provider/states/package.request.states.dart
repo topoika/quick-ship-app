@@ -41,17 +41,7 @@ class PackageRequestCreatedState extends PackageRequestStates {
 class RequestDeclining extends PackageRequestStates {}
 
 class RequestAccepting extends PackageRequestStates {}
+class RequestDeleted extends PackageRequestStates {}
+class PackageRequestAcceptedState extends PackageRequestStates {}
 
-class PackageRequestAcceptedState extends PackageRequestStates {
-  final PackageRequest packageRequest;
-  const PackageRequestAcceptedState({required this.packageRequest});
-  @override
-  List<Object> get props => [packageRequest];
-}
-
-class PackageRequestDeclinedState extends PackageRequestStates {
-  final PackageRequest packageRequest;
-  const PackageRequestDeclinedState({required this.packageRequest});
-  @override
-  List<Object> get props => [packageRequest];
-}
+class PackageRequestDeclinedState extends PackageRequestStates {}

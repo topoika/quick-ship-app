@@ -26,6 +26,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const MyPackages());
       case AppRoutes.myOrders:
         return MaterialPageRoute(builder: (_) => const MyOrders());
+      case AppRoutes.notifications:
+        return MaterialPageRoute(builder: (_) => const NotificationsPage());
       case AppRoutes.tabs:
         return MaterialPageRoute(builder: (_) => const TabsPage());
 
@@ -44,6 +46,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const PackageRequests());
       case AppRoutes.rateShipmentPage:
         return MaterialPageRoute(builder: (_) => const RateShipmentPage());
+      case AppRoutes.requestDetails:
+        return MaterialPageRoute(builder: (_) => const RequestDetails());
+      case AppRoutes.orderRequestPage:
+        return MaterialPageRoute(builder: (_) => const OrderRequestPage());
       default:
         return _errorRoute();
     }

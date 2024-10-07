@@ -20,7 +20,7 @@ class PackageRequests extends StatelessWidget {
         child: BlocBuilder<PackageRequestBloc, PackageRequestStates>(
           builder: (context, state) {
             if (state is PackageRequestLoadingState) {
-              return const ListLoadingWidget(itemCount: 10, height: 130);
+              return const ListLoadingWidget(itemCount: 10, height: 145);
             } else if (state is PackageRequestErrorState) {
               return Center(
                 child: ErrorNoDataWidget(

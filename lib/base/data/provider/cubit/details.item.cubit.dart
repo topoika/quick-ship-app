@@ -7,8 +7,16 @@ class DetailsItemCubit extends Cubit<DetailsItemState> {
     emit(state.copyWith(tripId: tripId));
   }
 
+  void setOrderId(int orderId) {
+    emit(state.copyWith(orderId: orderId));
+  }
+
   void setPackageId(int packageId) {
     emit(state.copyWith(packageId: packageId));
+  }
+
+  void setRequestId(int requestId) {
+    emit(state.copyWith(requestId: requestId));
   }
 
   void setRating(int rating) {
@@ -36,6 +44,8 @@ class DetailsItemCubit extends Cubit<DetailsItemState> {
 class DetailsItemState {
   int? tripId;
   int? packageId;
+  int? requestId;
+  int? orderId;
   int? rating;
   double? tip;
   Address? from;
@@ -44,6 +54,8 @@ class DetailsItemState {
   DetailsItemState({
     this.tripId,
     this.packageId,
+    this.requestId,
+    this.orderId,
     this.rating,
     this.tip,
     this.from,
@@ -54,6 +66,8 @@ class DetailsItemState {
     return DetailsItemState(
       tripId: 1,
       packageId: 1,
+      requestId: 1,
+      orderId: 1,
       rating: 5,
       tip: 0.0,
     );
@@ -63,6 +77,8 @@ class DetailsItemState {
     int? tripId,
     int? packageId,
     int? rating,
+    int? requestId,
+    int? orderId,
     double? tip,
     Address? from,
     Address? to,
@@ -70,7 +86,9 @@ class DetailsItemState {
     return DetailsItemState(
       tripId: tripId ?? this.tripId,
       packageId: packageId ?? this.packageId,
+      requestId: requestId ?? this.requestId,
       rating: rating ?? this.rating,
+      orderId: orderId ?? this.orderId,
       tip: tip ?? this.tip,
       from: from ?? this.from,
       to: to ?? this.to,

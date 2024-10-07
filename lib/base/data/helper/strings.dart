@@ -59,6 +59,10 @@ class AppStrings {
   static const String receiptIcon = '${icons}receipt.svg';
   static const String noWifiImage = '${images}no-wifi.png';
 
+  // notification icons
+  static const String requestIcon = '${icons}request.png';
+  static const String orderIcon = '${icons}order.png';
+
   // home icons
   static const String itanaryIcon = '${icons}itanary.svg';
   static const String shipmentsIcon = '${icons}Shipments.svg';

@@ -15,7 +15,7 @@ String? validator(String? value, String type) {
     case "confirm_password":
       error = validatePassword(value, confirm: true);
       break;
-    case "phone" || "phone_number":
+    case "phone" || "phone_number" || "mpesa_number":
       error = validatePhone(value);
       break;
     case "id_number":
@@ -133,18 +133,19 @@ String? validatePhone(String? value) {
   if (value == null || value.isEmpty) {
     return 'Phone number is required';
   }
+  String phone = value.replaceAll(" ", "");
 
-  if (value.startsWith('0')) {
-    if (value.length != 10) {
+  if (phone.startsWith('0')) {
+    if (phone.length != 10) {
       return 'Invalid phone number';
     }
   } else {
-    if (value.length != 9) {
+    if (phone.length != 9) {
       return 'Invalid phone number';
     }
   }
 
-  if (!RegExp(r'^\d+$').hasMatch(value)) {
+  if (!RegExp(r'^\d+$').hasMatch(phone)) {
     return 'Invalid phone number';
   }
 
@@ -177,7 +178,7 @@ TextInputType getTextInputType(String type) {
       return TextInputType.emailAddress;
     case "date":
       return TextInputType.datetime;
-    case "phone" || "phone_number":
+    case "phone" || "phone_number" || "mpesa_number":
       return TextInputType.phone;
     default:
       return TextInputType.text;
@@ -186,7 +187,7 @@ TextInputType getTextInputType(String type) {
 
 List<TextInputFormatter> inputFormatters(String type) {
   switch (type) {
-    case "phone":
+    case "phone" || "mpesa_number":
       return [
         MaskTextInputFormatter(
           mask: '### #### ###',

@@ -37,3 +37,6 @@ part 'models/package.dart';
 part 'models/address.dart';
 part 'models/shipment.dart';
 part 'models/package.request.dart';
+part 'models/notifications.dart';
+part 'models/faq.feed.dart';
+part 'models/order.dart';

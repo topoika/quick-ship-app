@@ -19,6 +19,7 @@ class AppRoutes {
   static const String editProfile = "/EditProfile";
   static const String myPackages = "/MyPackages";
   static const String myOrders = "/MyOrders";
+  static const String notifications = "/NotificationsPage";
 
   // activities
   static const String createPackage = "/CreatePackage";
@@ -28,4 +29,6 @@ class AppRoutes {
   static const String routeTripsPage = "/RouteTripsPage";
   static const String packageRequest = "/PackageRequest";
   static const String rateShipmentPage = "/RateShipmentPage";
+  static const String requestDetails = "/RequestDetails";
+  static const String orderRequestPage = "/OrderRequestPage";
 }

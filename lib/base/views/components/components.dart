@@ -42,6 +42,7 @@ part 'home/invite.join.community.widget.dart';
 // trip page widget
 part 'trip/create.trip.widgets.dart';
 part 'trip/trip.items.dart';
+part 'trip/notification.item.dart';
 
 // package
 part 'package/package.input.widgets.dart';

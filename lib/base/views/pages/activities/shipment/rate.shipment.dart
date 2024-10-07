@@ -8,6 +8,7 @@ class RateShipmentPage extends StatelessWidget {
     final detailsItemCubit = context.watch<DetailsItemCubit>();
     int rating = detailsItemCubit.state.rating ?? 5;
     double tip = detailsItemCubit.state.tip ?? 0.0;
+    int orderId = detailsItemCubit.state.orderId ?? 1;
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 72,
@@ -109,12 +110,12 @@ class RateShipmentPage extends StatelessWidget {
                     children: [0, 50, 100, 200].map((e) {
                       bool checked = (tip == e);
                       return Padding(
-                        padding: const EdgeInsets.all(5.0),
+                        padding: const EdgeInsets.all(2.0),
                         child: GestureDetector(
                           onTap: () => detailsItemCubit.setTip(e.toDouble()),
                           child: Container(
                             alignment: Alignment.center,
-                            padding: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(25),
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: checked
@@ -143,9 +144,29 @@ class RateShipmentPage extends StatelessWidget {
                 bottom: context.height * 0.05,
                 left: context.horPad,
                 right: context.horPad),
-            child: PrimaryButton(
-              text: tip > 0 ? "Pay Now" : "Done",
-              onPressed: () {},
+            child: BlocListener<OrderBloc, OrderStates>(
+              listener: (context, state) {
+                if (state is OrderError) {
+                  showCustomToast(message: state.message, type: "err");
+                } else if (state is ReviewAdded) {
+                  showCustomToast(
+                      message: "Review Added Succesfully", type: "suc");
+                  context.read<ShipmentsBloc>().add(FetchShipments());
+                  Navigator.pop(context);
+                }
+              },
+              child: BlocBuilder<OrderBloc, OrderStates>(
+                builder: (context, state) {
+                  return PrimaryButton(
+                    loading: state is OrderLoading,
+                    text: tip > 0 ? "Pay Now" : "Done",
+                    onPressed: () {
+                      context.read<OrderBloc>().add(AddReview(
+                          orderId: orderId, rating: rating, tipAmount: tip));
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],

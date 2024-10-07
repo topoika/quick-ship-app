@@ -38,7 +38,7 @@ class Address {
       'latitude': latitude,
       'longitude': longitude,
       'meetingPoint': meetingPoint,
-      'dateAndTime': "${date ?? ""} ${time ?? ""}",
+      'dateAndTime': formatToDateAndTime(date: date, time: time),
     };
   }
 

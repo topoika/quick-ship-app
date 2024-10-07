@@ -150,6 +150,7 @@ class SettingsPage extends StatelessWidget {
                 image: AppStrings.infoIcon,
                 onTap: () {
                   showCustomToast(message: "Coming soon");
+                  print("Time ${DateTime.now()}");
                 },
               ),
               BlocListener<AuthBloc, AuthState>(
@@ -159,7 +160,6 @@ class SettingsPage extends StatelessWidget {
                   } else if (state is LogoutSuccess) {
                     showCustomToast(
                         message: "Logged out successfully", type: "suc");
-                    context.read<NavigatorCubit>().setIndex(0);
                     Navigator.pushNamedAndRemoveUntil(
                         context, AppRoutes.login, (route) => false);
                   }
@@ -240,7 +240,6 @@ class SettingsPage extends StatelessWidget {
                   if (state is AuthError) {
                     showCustomToast(message: state.message, type: "err");
                   } else if (state is DeleteAccountSuccess) {
-                    context.read<NavigatorCubit>().setIndex(0);
                     showCustomToast(
                         message: "Account deleted successfully", type: "suc");
                     Navigator.pushNamedAndRemoveUntil(

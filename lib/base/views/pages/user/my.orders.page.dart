@@ -36,7 +36,59 @@ class MyOrders extends StatelessWidget {
           weight: FontWeight.w600,
         ),
       ),
-      body: Container(),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<MyOrderBloc>().add(FetchOrders());
+        },
+        child: BlocBuilder<MyOrderBloc, OrderStates>(
+          builder: (context, state) {
+            if (state is OrderLoading) {
+              return const ListLoadingWidget(itemCount: 10, height: 130);
+            } else if (state is OrdersLoaded) {
+              if (state.orders.isEmpty) {
+                return Center(
+                  child: ErrorNoDataWidget(
+                    type: "no-data",
+                    message: "No orders yet",
+                    onRetry: () {
+                      context.read<MyOrderBloc>().add(FetchOrders());
+                    },
+                  ),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: state.orders.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(horizontal: context.horPad),
+                  itemBuilder: (context, index) {
+                    return OrderItemWidget(order: state.orders[index]);
+                  },
+                );
+              }
+            } else if (state is OrderError) {
+              return Center(
+                child: ErrorNoDataWidget(
+                  type: "error",
+                  message: state.message,
+                  onRetry: () {
+                    context.read<MyOrderBloc>().add(FetchOrders());
+                  },
+                ),
+              );
+            } else {
+              return Center(
+                child: ErrorNoDataWidget(
+                  type: "no-data",
+                  message: "No orders yet",
+                  onRetry: () {
+                    context.read<MyOrderBloc>().add(FetchOrders());
+                  },
+                ),
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 }

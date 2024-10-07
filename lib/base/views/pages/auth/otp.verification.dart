@@ -135,6 +135,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                     } else if (state is VerificationSuccess) {
                       showCustomToast(message: "Verified", type: "suc");
                       activeUser.value.signInMethodVerified = true;
+                      context.read<NavigatorCubit>().setIndex(0);
                       context.read<OtpCubit>().clear();
                       Navigator.pushNamedAndRemoveUntil(
                           context, AppRoutes.tabs, (route) => false);

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of "../../pages.dart";
 
 class PackageDetails extends StatelessWidget {
@@ -47,9 +46,7 @@ class PackageDetails extends StatelessWidget {
               border: Border.all(color: Colors.grey[300]!),
             ),
             child: GestureDetector(
-              onTap: () {
-                // TODO: Navigate to edit package screen
-              },
+              onTap: () {},
               child: const QImage(
                 imageUrl: AppStrings.editIcon,
                 height: 20,
@@ -109,7 +106,6 @@ class PackageDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool mine = activeUser.value.id == package.shipper?.id!;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,300 +117,11 @@ class PackageDetailsWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    TextVariation(
-                      text: package.name!,
-                      size: 17,
-                      weight: FontWeight.w600,
-                      color: context.primaryColor,
-                    ),
-                    TextVariation(
-                      text: "Item# ${package.id}",
-                      size: 12,
-                      weight: FontWeight.w500,
-                      opacity: .7,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                CustomContainer(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            TextVariation(
-                              text:
-                                  "${package.weight?.toStringAsFixed(1) ?? "0"} Kg",
-                              size: 14,
-                              weight: FontWeight.w600,
-                            ),
-                            const TextVariation(
-                              text: "Weight",
-                              size: 10,
-                              weight: FontWeight.w500,
-                              opacity: .7,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 35,
-                        width: 2,
-                        decoration: BoxDecoration(
-                          color: context.primaryColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            TextVariation(
-                              text:
-                                  "${package.dimLength?.ceil() ?? "0"}' ${package.dimWidth?.ceil() ?? "0"}' ${package.dimHeight?.ceil() ?? "0"}'",
-                              size: 14,
-                              weight: FontWeight.w600,
-                            ),
-                            const TextVariation(
-                              text: "Dimensions",
-                              size: 10,
-                              weight: FontWeight.w500,
-                              opacity: .7,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 35,
-                        width: 2,
-                        decoration: BoxDecoration(
-                          color: context.primaryColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            TextVariation(
-                              text: formatCurrency(value: package.value),
-                              size: 14,
-                              weight: FontWeight.w600,
-                            ),
-                            const TextVariation(
-                              text: "Value",
-                              size: 10,
-                              weight: FontWeight.w500,
-                              opacity: .7,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 10),
-                    TextVariation(
-                      text: "Note to Postman",
-                      size: 14,
-                      weight: FontWeight.w500,
-                      color: context.primaryColor,
-                    ),
-                    CustomContainer(
-                      child: Column(
-                        children: <Widget>[
-                          detailsItem(txt: package.postManNote!, value: ""),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                TextVariation(
-                  text: "Description",
-                  size: 14,
-                  weight: FontWeight.w500,
-                  color: context.primaryColor,
-                ),
-                TextVariation(
-                  text: package.description!,
-                  size: 11,
-                  weight: FontWeight.w400,
-                  opacity: .7,
-                ),
-                const SizedBox(height: 10),
-                TextVariation(
-                  text: "Take off Address",
-                  size: 14,
-                  weight: FontWeight.w500,
-                  color: context.primaryColor,
-                ),
-                CustomContainer(
-                  child: Column(
-                    children: <Widget>[
-                      detailsItem(
-                        txt: "Address",
-                        value: package.sourceAddress?.nameAddress,
-                      ),
-                      detailsItem(
-                        txt: "City",
-                        value: package.sourceAddress?.city,
-                      ),
-                      detailsItem(
-                        txt: "Meeting Point",
-                        value: package.sourceAddress?.meetingPoint,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                TextVariation(
-                  text: "Delivery Address",
-                  size: 14,
-                  weight: FontWeight.w500,
-                  color: context.primaryColor,
-                ),
-                CustomContainer(
-                  child: Column(
-                    children: <Widget>[
-                      detailsItem(
-                        txt: "Address",
-                        value: package.destinationAddress?.nameAddress,
-                      ),
-                      detailsItem(
-                        txt: "City",
-                        value: package.destinationAddress?.city,
-                      ),
-                      detailsItem(
-                        txt: "Meeting Point",
-                        value: package.destinationAddress?.meetingPoint,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                CustomContainer(
-                  child: Column(
-                    children: <Widget>[
-                      detailsItem(
-                        txt: "Date",
-                        value: package.dateOfShipment,
-                      ),
-                    ],
-                  ),
-                ),
-                Visibility(
-                  visible: !mine,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 15),
-                        margin: const EdgeInsets.only(top: 10, bottom: 15),
-                        decoration: BoxDecoration(
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(.06),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            TextVariation(
-                                text: "Shipper",
-                                size: 14,
-                                weight: FontWeight.w600,
-                                color: context.primaryColor),
-                            TextVariation(
-                              text: package.shipper?.name ?? "Shipper",
-                              size: 16,
-                              weight: FontWeight.w600,
-                              color: context.primaryColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: InkWell(
-                          onTap: () {
-                            // TODO: Navigate to chat screen
-                            // Navigator.pushNamed(context, AppStrings.chat);
-                          },
-                          child: Row(
-                            children: <Widget>[
-                              Image.asset(
-                                AppStrings.chatActive,
-                                height: 22,
-                                color: Colors.black,
-                              ),
-                              const SizedBox(width: 10),
-                              TextVariation(
-                                text: "Contact Shipper",
-                                size: 14,
-                                weight: FontWeight.w500,
-                                color: context.primaryColor,
-                              ),
-                              const Spacer(),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                color: context.primaryColor,
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                PackageDetailsWidgetBody(package: package),
                 const SizedBox(height: 10),
                 Visibility(
-                  visible: mine,
-                  replacement: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: PrimaryButtonUnfilled(
-                            text: "Decline",
-                            onPressed: () {
-                              showCustomDialog(
-                                context: context,
-                                data: DialogData(
-                                  title: "Confirm Decline",
-                                  description:
-                                      "Are you sure you want to decline this pacakge request?",
-                                  noText: "Cancel",
-                                  yesText: "Decline",
-                                  yesOnPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  noOnPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  type: "warning",
-                                ),
-                              );
-                              // TODO: Navigate to requests screen
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                        Expanded(
-                          child: PrimaryButton(
-                            text: "Accept",
-                            onPressed: () {
-                              // TODO: Navigate to find postman screen
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  visible: package.status == "active",
+                  replacement: const SizedBox.shrink(),
                   child: Column(
                     children: [
                       Row(
@@ -475,7 +182,7 @@ class PackageDetailsWidget extends StatelessWidget {
                                   data: DialogData(
                                     title: "Confirm Delete",
                                     description:
-                                        "Are you sure you want to delete this pacakge?",
+                                        "Are you sure you want to delete this package?",
                                     noText: "Cancel",
                                     yesText: "Delete",
                                     yesOnPressed: () {
@@ -532,7 +239,7 @@ class PackageDetailsWidget extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );

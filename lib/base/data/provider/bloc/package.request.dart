@@ -9,6 +9,7 @@ class PackageRequestBloc
     on<FetchPackageRequestsEvent>(fetchPackageRequests);
     on<DeclinePackageRequestEvent>(declinePackageRequest);
     on<AcceptPackageRequestEvent>(acceptPackageRequest);
+    on<DeletePackageRequest>(deleteRequest);
   }
   // create package request
   void createPackageRequest(event, emit) async {
@@ -17,6 +18,17 @@ class PackageRequestBloc
       final packageRequest = await repo.createPackageRequest(
           packageId: event.packageId, tripId: event.tripId);
       emit(PackageRequestCreatedState(packageRequest: packageRequest));
+    } catch (e) {
+      emit(PackageRequestErrorState(message: e.toString()));
+    }
+  }
+
+  // delete request
+  void deleteRequest(event, emit) async {
+    emit(PackageRequestLoadingState());
+    try {
+      await repo.deletePackageRequest(id: event.id);
+      emit(RequestDeleted());
     } catch (e) {
       emit(PackageRequestErrorState(message: e.toString()));
     }
@@ -37,8 +49,8 @@ class PackageRequestBloc
   void acceptPackageRequest(event, emit) async {
     emit(RequestAccepting());
     try {
-      final packageRequest = await repo.acceptPackageRequest(id: event.id);
-      emit(PackageRequestAcceptedState(packageRequest: packageRequest));
+      await repo.acceptPackageRequest(id: event.id);
+      emit(PackageRequestAcceptedState());
     } catch (e) {
       emit(PackageRequestErrorState(message: e.toString()));
     }
@@ -48,8 +60,8 @@ class PackageRequestBloc
   void declinePackageRequest(event, emit) async {
     emit(RequestDeclining());
     try {
-      final packageRequest = await repo.declinePackageRequest(id: event.id);
-      emit(PackageRequestDeclinedState(packageRequest: packageRequest));
+      await repo.declinePackageRequest(id: event.id);
+      emit(PackageRequestDeclinedState());
     } catch (e) {
       emit(PackageRequestErrorState(message: e.toString()));
     }
