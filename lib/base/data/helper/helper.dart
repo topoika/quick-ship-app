@@ -30,8 +30,12 @@ DateTime? formatToDateAndTime({String? date, String? time}) {
   if (date == null || time == null) {
     return null;
   }
+
+  print('Date: $date, Time: $time');
   final DateTime dateTime =
       DateFormat('yyyy-MM-dd hh:mm a').parse('$date $time');
+  print('Date: $dateTime, Time: $time');
+
   return dateTime;
 }
 
@@ -42,8 +46,14 @@ String? capitalize(String? s) {
   return s[0].toUpperCase() + s.substring(1);
 }
 
+String getTimeFromTimestamp(Timestamp timeStamp) =>
+    timeStamp.toDate().toString();
+
 // write a function to return an address name from the address model
-String getAddressName(Address address) {
+String getAddressName(Address? address) {
+  if (address == null) {
+    return "";
+  }
   String name = "";
 
   if (address.nameAddress != null) {
@@ -159,20 +169,35 @@ Future<double?> calculateDistanceToPoint(Coordinate point) async {
   );
 }
 
+String getTimeOnly(String time) => DateFormat.jm().format(DateTime.parse(time));
+String getDateString(DateTime date) {
+  DateTime now = DateTime.now();
+  int difference = now.day - date.day;
+  if (difference == 0) {
+    return "Today";
+  } else if (difference == 1) {
+    return "Yesterday";
+  } else if (difference > 1 && difference <= 7) {
+    return DateFormat('EEEE').format(date); // Day of the week
+  } else {
+    return DateFormat('yyyy-MM-dd').format(date); // Date format
+  }
+}
+
 double calculateDistance(Coordinate poinT1, Coordinate point2) {
   const earthRadiusKm = 6371;
 
-  final lat1 = poinT1.latitude * pi / 180;
-  final lon1 = poinT1.longitude * pi / 180;
-  final lat2 = point2.latitude * pi / 180;
-  final lon2 = point2.longitude * pi / 180;
+  final lat1 = poinT1.latitude * math.pi / 180;
+  final lon1 = poinT1.longitude * math.pi / 180;
+  final lat2 = point2.latitude * math.pi / 180;
+  final lon2 = point2.longitude * math.pi / 180;
 
   final dLat = lat2 - lat1;
   final dLon = lon2 - lon1;
 
-  final a = sin(dLat / 2) * sin(dLat / 2) +
-      cos(lat1) * cos(lat2) * sin(dLon / 2) * sin(dLon / 2);
-  final c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  final a = math.sin(dLat / 2) * math.sin(dLat / 2) +
+      math.cos(lat1) * math.cos(lat2) * math.sin(dLon / 2) * math.sin(dLon / 2);
+  final c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
 
   final distance = earthRadiusKm * c;
 

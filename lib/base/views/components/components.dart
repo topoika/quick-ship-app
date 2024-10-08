@@ -51,3 +51,7 @@ part 'package/package.images.dart';
 
 // order
 part 'order/order.items.dart';
+
+
+// chat
+part 'chat/chat.tile.item.dart';

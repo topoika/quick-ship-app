@@ -165,6 +165,15 @@ class NotificationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<int> readNotifications =
+        context.watch<DetailsItemCubit>().viewedNotification;
+    List<AppNotifications> notifications = context
+            .read<NotificationBloc>()
+            .state is NotificationsLoadedAppDataState
+        ? (context.read<NotificationBloc>().state
+                as NotificationsLoadedAppDataState)
+            .notifications
+        : [];
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, AppRoutes.notifications);
@@ -175,15 +184,19 @@ class NotificationButton extends StatelessWidget {
             Icons.notifications,
             color: color ?? Colors.black,
           ),
-          Positioned(
-            right: 0,
-            top: 0,
-            child: Container(
-              height: 8,
-              width: 8,
-              decoration: const BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
+          Visibility(
+            visible:
+                notifications.any((n) => !readNotifications.contains(n.id)),
+            child: Positioned(
+              right: 0,
+              top: 0,
+              child: Container(
+                height: 8,
+                width: 8,
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                  shape: BoxShape.circle,
+                ),
               ),
             ),
           ),

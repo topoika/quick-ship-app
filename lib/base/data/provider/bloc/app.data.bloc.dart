@@ -5,6 +5,7 @@ class NotificationBloc extends Bloc<AppDataEvents, AppDataStates> {
 
   NotificationBloc() : super(InitialAppDataState()) {
     on<FetchNotifications>(fetchNotifications);
+    on<SendNotification>(sendNotification);
   }
   void fetchNotifications(event, emit) async {
     emit(LoadingAppDataState());
@@ -14,6 +15,10 @@ class NotificationBloc extends Bloc<AppDataEvents, AppDataStates> {
     } catch (e) {
       emit(ErrorAppDataState(message: e.toString()));
     }
+  }
+
+  void sendNotification(event, emit) async {
+    repo.sendNotification(notification: event.notification);
   }
 }
 

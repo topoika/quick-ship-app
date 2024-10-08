@@ -10,11 +10,24 @@ class NotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<int> readNotifications =
+        context.watch<DetailsItemCubit>().viewedNotification;
     return GestureDetector(
       onTap: () {
+        readNotifications.add(notification.id!);
+        Storage.saveData("viewedNotification", readNotifications.join(","));
+        context
+            .read<DetailsItemCubit>()
+            .setViewedNotification(readNotifications);
         if (notification.type == "order") {
           context.read<MyOrderBloc>().add(FetchOrders());
           Navigator.pushNamed(context, AppRoutes.myOrders);
+        } else if (notification.type == "response") {
+          context.read<DetailsItemCubit>().setRequestId(notification.itemId!);
+          context
+              .read<PackageRequestDetailsBloc>()
+              .add(FetchPackageRequestDetailsEvent(id: notification.itemId!));
+          Navigator.pushNamed(context, AppRoutes.requestDetails);
         } else {
           context
               .read<PackageRequestDetailsBloc>()

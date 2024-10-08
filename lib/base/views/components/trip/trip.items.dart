@@ -87,7 +87,7 @@ Widget bottomPart(Trip trip) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextVariation(
-              text: getAddressName(trip.departure!),
+              text: getAddressName(trip.departure),
               size: 11,
               weight: FontWeight.w600,
             ),
@@ -106,7 +106,7 @@ Widget bottomPart(Trip trip) {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextVariation(
-                text: getAddressName(trip.destination!),
+                text: getAddressName(trip.destination),
                 size: 11,
                 align: TextAlign.right,
                 weight: FontWeight.w600),

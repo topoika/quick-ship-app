@@ -1,8 +1,10 @@
 library pages;
 
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,6 +51,7 @@ part 'activities/package/package.details.dart';
 part "activities/package/package.requests.dart";
 part 'activities/package/request.details.dart';
 part 'activities/trip/order.request.details.dart';
+part 'activities/conversation.page.dart';
 
 // shipments
 part 'activities/shipment/rate.shipment.dart';

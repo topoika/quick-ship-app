@@ -62,6 +62,7 @@ class AppStrings {
   // notification icons
   static const String requestIcon = '${icons}request.png';
   static const String orderIcon = '${icons}order.png';
+  static const String sendIcon = '${icons}send.png';
 
   // home icons
   static const String itanaryIcon = '${icons}itanary.svg';

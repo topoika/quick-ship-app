@@ -39,6 +39,12 @@ class DetailsItemCubit extends Cubit<DetailsItemState> {
     emit(state.copyWith(
         from: package.sourceAddress, to: package.destinationAddress));
   }
+
+  void setViewedNotification(List<int> ids) {
+    emit(state.copyWith(viewedNotification: ids));
+  }
+
+  List<int> get viewedNotification => state.viewedNotification ?? [];
 }
 
 class DetailsItemState {
@@ -50,6 +56,7 @@ class DetailsItemState {
   double? tip;
   Address? from;
   Address? to;
+  List<int>? viewedNotification;
 
   DetailsItemState({
     this.tripId,
@@ -60,6 +67,7 @@ class DetailsItemState {
     this.tip,
     this.from,
     this.to,
+    this.viewedNotification,
   });
 
   factory DetailsItemState.initial() {
@@ -70,6 +78,7 @@ class DetailsItemState {
       orderId: 1,
       rating: 5,
       tip: 0.0,
+      viewedNotification: makeIntList("viewedNotification"),
     );
   }
 
@@ -82,6 +91,7 @@ class DetailsItemState {
     double? tip,
     Address? from,
     Address? to,
+    List<int>? viewedNotification,
   }) {
     return DetailsItemState(
       tripId: tripId ?? this.tripId,
@@ -92,6 +102,15 @@ class DetailsItemState {
       tip: tip ?? this.tip,
       from: from ?? this.from,
       to: to ?? this.to,
+      viewedNotification: viewedNotification ?? this.viewedNotification,
     );
   }
+}
+
+List<int> makeIntList(String key) {
+  String? value = Storage.getData(key, defaultValue: "");
+  if (value == null || value.isEmpty) {
+    return [];
+  }
+  return value.split(",").map((e) => int.parse(e)).toList();
 }

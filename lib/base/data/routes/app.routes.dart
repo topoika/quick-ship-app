@@ -18,6 +18,7 @@ class AppRoutes {
   // user
   static const String editProfile = "/EditProfile";
   static const String myPackages = "/MyPackages";
+  static const String conversationPage = "/ConversationPage";
   static const String myOrders = "/MyOrders";
   static const String notifications = "/NotificationsPage";
 

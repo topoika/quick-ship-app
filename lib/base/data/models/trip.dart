@@ -36,7 +36,7 @@ class Trip {
       'travelMethodId': travelMethod?.id,
       'travelRole': travelRole,
       'allowRequest': allowRequest ?? true,
-      'status': status ?? "pending",
+      'status': status ?? "active",
       'guideToMeetingPoint': guideToMeetingPoint,
       'packagePreference': packagePreference,
       'postageFee': postageFee,

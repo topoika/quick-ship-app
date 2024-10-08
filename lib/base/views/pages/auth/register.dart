@@ -129,6 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         text: "Register",
                         loading: state is AuthLoading,
                         onPressed: () {
+                          validationErrors.clear();
                           registerFormKey.currentState!.save();
                           if (registerFormKey.currentState!.validate()) {
                             registerFormKey.currentState!.save();

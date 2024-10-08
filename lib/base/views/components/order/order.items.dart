@@ -154,43 +154,58 @@ class ShipmentItemWidget extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
-            color: Colors.grey[400],
-            thickness: .8,
-            height: 20,
-          ),
           Visibility(
-            visible: order.review != null,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const TextVariation(
-                    text: "Tip",
-                    size: 12,
-                    weight: FontWeight.w500,
+            visible: order.review != null && (order.review?.tipAmount ?? 0) > 0,
+            child: Column(
+              children: [
+                Divider(
+                  color: Colors.grey[400],
+                  thickness: .8,
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      const TextVariation(
+                        text: "Tip",
+                        size: 12,
+                        weight: FontWeight.w500,
+                      ),
+                      TextVariation(
+                        text: formatCurrency(
+                            value: order.review?.tipAmount ?? 0.0),
+                        size: 13,
+                        weight: FontWeight.w600,
+                      ),
+                    ],
                   ),
-                  TextVariation(
-                    text: formatCurrency(value: order.review?.tipAmount ?? 0.0),
-                    size: 13,
-                    weight: FontWeight.w600,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Visibility(
             visible: order.review == null && order.status == "completed",
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: PrimaryButton(
-                text: "Rate Shippment",
-                onPressed: () {
-                  context.read<DetailsItemCubit>().setOrderId(order.id!);
-                  Navigator.of(context).pushNamed(AppRoutes.rateShipmentPage);
-                },
-              ),
+            child: Column(
+              children: [
+                Divider(
+                  color: Colors.grey[400],
+                  thickness: .8,
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: PrimaryButton(
+                    text: "Rate Shippment",
+                    onPressed: () {
+                      context.read<DetailsItemCubit>().setOrderId(order.id!);
+                      Navigator.of(context)
+                          .pushNamed(AppRoutes.rateShipmentPage);
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],

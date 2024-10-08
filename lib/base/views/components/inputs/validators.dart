@@ -133,20 +133,27 @@ String? validatePhone(String? value) {
   if (value == null || value.isEmpty) {
     return 'Phone number is required';
   }
+
   String phone = value.replaceAll(" ", "");
+
+  if (!RegExp(r'^\d+$').hasMatch(phone)) {
+    return 'Phone number can only contain digits';
+  }
 
   if (phone.startsWith('0')) {
     if (phone.length != 10) {
-      return 'Invalid phone number';
+      return 'Phone number must be 10 digits long';
+    }
+    if (!(phone[1] == '1' || phone[1] == '7')) {
+      return 'Phone number must start with 01 or 07';
+    }
+    if (!RegExp(r'^0+').hasMatch(phone)) {
+      return 'Phone number cannot be all zeros';
     }
   } else {
     if (phone.length != 9) {
-      return 'Invalid phone number';
+      return 'Phone number must be 9 digits long without leading 0';
     }
-  }
-
-  if (!RegExp(r'^\d+$').hasMatch(phone)) {
-    return 'Invalid phone number';
   }
 
   return null;

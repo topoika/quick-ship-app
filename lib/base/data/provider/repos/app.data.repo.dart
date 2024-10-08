@@ -44,4 +44,9 @@ class AppDataRepo extends NetworkRequest {
       rethrow;
     }
   }
+
+  void sendNotification({required AppNotifications notification}) async {
+    log(json.encode(notification.toMap()).toString());
+    await post("user/send-notification", notification.toMap());
+  }
 }

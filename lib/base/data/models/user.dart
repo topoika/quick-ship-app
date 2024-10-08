@@ -62,6 +62,16 @@ class User {
     };
   }
 
+  Map<String, dynamic> toChatMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'image': image,
+      'signInMethod': signInMethod,
+      'verified': verified,
+    };
+  }
+
   // toUpdateMap
   Map<String, dynamic> toUpdateMap() {
     return <String, dynamic>{
@@ -79,7 +89,7 @@ class User {
       email: map['email'] != null ? map['email'] as String : null,
       password: map['password'] != null ? map['password'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
-      image: map['image'] != null ? mediaUrl + map['image'] : null,
+      image: map['image'] != null ? getImageUrl(map['image']) : null,
       idNumber: map['idNumber'] != null ? map['idNumber'] as String : null,
       succesScore:
           map['succesScore'] != null ? map['succesScore'] as double : null,
@@ -107,6 +117,18 @@ class User {
   }
 }
 
+String getImageUrl(String? image) {
+  if (image == null) {
+    return "";
+  }
+  // if image starts with http, return image
+  if (image.startsWith('http')) {
+    return image;
+  }
+  // else return mediaUrl + image
+  return mediaUrl + image;
+}
+
 class UserWallet {
   int? id;
   double? availableForWithdrawal;
@@ -131,8 +153,8 @@ class UserWallet {
       availableForWithdrawal: map['availableForWithdrawal'] != null
           ? double.parse(map['availableForWithdrawal'].toString())
           : null,
-      earningsForMonth: map['earningsForMonth'] != null
-          ? double.parse(map['earningsForMonth'].toString())
+      earningsForMonth: map['earningsAllTime'] != null
+          ? double.parse(map['earningsAllTime'].toString())
           : null,
       successScore: map['successScore'] != null
           ? double.parse(map['successScore'].toString())

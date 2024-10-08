@@ -77,6 +77,7 @@ class ResetPassword extends StatelessWidget {
                       return PrimaryButton(
                         text: "Submit",
                         onPressed: () {
+                          validationErrors.clear();
                           if (passwordFormKey.currentState!.validate()) {
                             passwordFormKey.currentState!.save();
                             context.read<AuthBloc>().add(ResetPasswordEvent(

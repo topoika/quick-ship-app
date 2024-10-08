@@ -76,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                         text: "Login",
                         loading: state is AuthLoading,
                         onPressed: () {
+                          validationErrors.clear();
                           if (loginFormKey.currentState!.validate()) {
                             loginFormKey.currentState!.save();
                             context

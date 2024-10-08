@@ -167,65 +167,73 @@ class RequestDetails extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Visibility(
-                          visible: request.status != "rejected",
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 30),
-                              child: Visibility(
-                                visible: request.status == "pending",
-                                replacement: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    const TextVariation(
-                                      text: "Congratulations 🎉",
-                                      size: 17,
-                                      align: TextAlign.center,
-                                      weight: FontWeight.w600,
-                                      color: Colors.green,
+                        request.status != "paid"
+                            ? Visibility(
+                                visible: request.status != "rejected",
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15, horizontal: 30),
+                                    child: Visibility(
+                                      visible: request.status == "pending",
+                                      replacement: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          const TextVariation(
+                                            text: "Congratulations 🎉",
+                                            size: 17,
+                                            align: TextAlign.center,
+                                            weight: FontWeight.w600,
+                                            color: Colors.green,
+                                          ),
+                                          TextVariation(
+                                            text:
+                                                "Request accepted by ${request.trip?.postman?.name ?? "postman"}, Pay now to make an order",
+                                            size: 12,
+                                            align: TextAlign.center,
+                                            weight: FontWeight.w400,
+                                            color: Colors.grey,
+                                          ),
+                                        ],
+                                      ),
+                                      child: const Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          TextVariation(
+                                            text: "Awaiting response",
+                                            size: 17,
+                                            align: TextAlign.center,
+                                            weight: FontWeight.w600,
+                                          ),
+                                          TextVariation(
+                                            text:
+                                                "Request was send to postman, waiting for response",
+                                            size: 12,
+                                            align: TextAlign.center,
+                                            weight: FontWeight.w400,
+                                            color: Colors.grey,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    TextVariation(
-                                      text:
-                                          "Request accepted by ${request.trip?.postman?.name ?? "postman"}, Pay now to make an order",
-                                      size: 12,
-                                      align: TextAlign.center,
-                                      weight: FontWeight.w400,
-                                      color: Colors.grey,
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    TextVariation(
-                                      text: "Awaiting response",
-                                      size: 17,
-                                      align: TextAlign.center,
-                                      weight: FontWeight.w600,
-                                    ),
-                                    TextVariation(
-                                      text:
-                                          "Request was send to postman, waiting for response",
-                                      size: 12,
-                                      align: TextAlign.center,
-                                      weight: FontWeight.w400,
-                                      color: Colors.grey,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                              )
+                            : const SizedBox(),
                         const SizedBox(height: 5),
-                        request.status == "rejected"
+                        request.status == "rejected" || request.status == "paid"
                             ? Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 15),
                                 child: PrimaryButtonUnfilled(
                                   text: "Message ",
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    await messageUser(
+                                        context: context,
+                                        user: request.trip!.postman!);
+                                  },
                                 ),
                               )
                             : Visibility(

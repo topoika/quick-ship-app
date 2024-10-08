@@ -184,6 +184,7 @@ class CreateTrip extends StatelessWidget {
                           onTap: () async {
                             await pickTime(context).then((value) {
                               if (value != null) {
+                                log("Time: $value");
                                 trip.destination?.time =
                                     formatToTime(date: value);
                                 setTrip(trip: trip, context: context);

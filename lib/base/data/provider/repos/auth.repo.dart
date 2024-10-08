@@ -40,7 +40,7 @@ class AuthRepo extends NetworkRequest {
       final response = await get("user/info");
       if (response['user'] != null) {
         activeUser = ValueNotifier(User.fromMap(response['user']));
-        // await fcm.subscribeToTopic("user_${activeUser.value.id}");
+        await fcm.subscribeToTopic("user_${activeUser.value.id}");
         return activeUser.value;
       } else {
         throw CustomError("User not found");
@@ -57,7 +57,7 @@ class AuthRepo extends NetworkRequest {
       if (response['user'] != null && response['auth_token'] != null) {
         activeUser = ValueNotifier(User());
         activeUser.value = User.fromMap(response['user']);
-        // await fcm.subscribeToTopic("user_${activeUser.value.id}");
+        await fcm.subscribeToTopic("user_${activeUser.value.id}");
         Storage.saveData("authToken", response['auth_token']);
         return activeUser.value;
       } else {
@@ -95,7 +95,7 @@ class AuthRepo extends NetworkRequest {
       if (response['success'] == true) {
         // await auth.signOut();
         // await googleSignIn.signOut();
-        // await fcm.unsubscribeFromTopic("user_${activeUser.value.id}");
+        await fcm.unsubscribeFromTopic("user_${activeUser.value.id}");
         activeUser.value = User();
         Storage.deleteData("authToken");
         return;
@@ -113,7 +113,7 @@ class AuthRepo extends NetworkRequest {
       // await auth.signOut();
       // await googleSignIn.signOut();
       activeUser.value = User();
-      // await fcm.unsubscribeFromTopic("user_${activeUser.value.id}");
+      await fcm.unsubscribeFromTopic("user_${activeUser.value.id}");
       Storage.deleteData("authToken");
     } catch (e) {
       rethrow;

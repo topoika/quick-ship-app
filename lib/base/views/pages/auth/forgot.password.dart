@@ -69,6 +69,7 @@ class ForgotPassword extends StatelessWidget {
                         text: "Send OTP",
                         loading: state is AuthLoading,
                         onPressed: () {
+                          validationErrors.clear();
                           if (forgotPasswordFormKey.currentState!.validate()) {
                             forgotPasswordFormKey.currentState!.save();
                             context.read<AuthBloc>().add(RequestResetPassword(

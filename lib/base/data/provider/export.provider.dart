@@ -20,6 +20,7 @@ part "providers.dart";
 part "cubit/auth.cubit.dart";
 part "cubit/new.item.cubit.dart";
 part "cubit/details.item.cubit.dart";
+part 'cubit/chat.cubit.dart';
 
 // blocs
 part "bloc/auth.bloc.dart";

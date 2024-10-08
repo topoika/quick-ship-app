@@ -2,7 +2,7 @@ part of "../data.dart";
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // final args = settings.arguments;
+    final args = settings.arguments;
     switch (settings.name) {
       case AppRoutes.onboardingPage:
         return MaterialPageRoute(builder: (_) => const OnboadingPage());
@@ -30,6 +30,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const NotificationsPage());
       case AppRoutes.tabs:
         return MaterialPageRoute(builder: (_) => const TabsPage());
+      case AppRoutes.conversationPage:
+        return MaterialPageRoute(builder: (_) =>  ConversationPage(isFromNotification:args as bool));
 
       // activities
       case AppRoutes.createPackage:

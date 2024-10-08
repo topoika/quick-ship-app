@@ -1,4 +1,4 @@
-package com.example.quick_ship_app
+package com.quickship.com
 
 import io.flutter.embedding.android.FlutterActivity
 
