@@ -1,8 +1,8 @@
 part of "../data.dart";
 
 const String ROUTE_TOKEN = "RAHw2cpUYobl3FoJyokwf95OJzCbSBFW";
-const String API_URL = "http://15.237.218.2:9000/api/";
-const String mediaUrl = "http://15.237.218.2:9000/uploads/media/";
+const String API_URL = "https://example.john-muinde.com/api/";
+const String mediaUrl = "https://example.john-muinde.com/uploads/media/";
 
 class AppStrings {
   static const String appName = "Quick Ship";
