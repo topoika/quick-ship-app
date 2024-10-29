@@ -13,9 +13,7 @@ class AuthBloc extends Bloc<AuthEvents, AuthState> {
     // password reset
     on<RequestResetPassword>(requestPasswordReset);
     on<ResetPasswordEvent>(resetPassword);
-    // on<GoogleLogin>(googleLogin);
 
-    // log out
     on<Logout>(logout);
   }
   // request email otp
